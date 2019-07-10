@@ -1,5 +1,8 @@
-cmake_minimum_required(VERSION 2.8)
+project(Crane)
+cmake_minimum_required(VERSION 3.13)
 cmake_policy(SET CMP0015 NEW)
+
+include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -g -Wall -fPIC -std=c++11")
 set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -10,26 +13,12 @@ set(CRANE_PLATFORM_LINUX ON)
 
 ## Placeholder ##
 set(CMAKE_INSTALL_PREFIX "/home/fabio/Documents/Crane/build/install")
+set(GLAD_ROOT_DIR "/home/fabio/Documents/Crane/ThirdParty/glad/build")
 
 find_package(GLFW REQUIRED)
 find_package(OpenGL REQUIRED)
 #find_package(GLM REQUIRED)
 find_package(Glad REQUIRED)
-
-if (NOT GLAD_FOUND)
-  message(WARNING "Could not find glad installation. Building from source.")
-
-  ExternalProject_Add(glad
-    PREFIX ${CMAKE_SOURCE_DIR}/ThirdParty/glad
-    CMAKE_ARGS -DCMAKE_INSTALL_PREFIX:PATH=${CMAKE_SOURCE_DIR}/ThirdParty/glad/install
-  )
-
-  ExternalProject_Get_Property(glad install_dir)
-  include_directories(${install_dir}/include)
-
-  add_dependencies(Crane glad)
-  target_link_libraries(Crane ${install_dir}/lib/glad.a)
-endif()
 
 include_directories(${OPENGL_INCLUDE_DIRS})
 include_directories(${GLFW_INCLUDE_DIRS})

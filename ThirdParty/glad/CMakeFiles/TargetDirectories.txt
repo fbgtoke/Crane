@@ -1,4 +1,0 @@
-/tmp/glad/CMakeFiles/edit_cache.dir
-/tmp/glad/CMakeFiles/rebuild_cache.dir
-/tmp/glad/CMakeFiles/glad.dir
-/tmp/glad/CMakeFiles/glad-generate-files.dir
