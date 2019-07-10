@@ -1,0 +1,5 @@
+if (${CRANE_PLATFORM_LINUX})
+  add_subdirectory(Linux)
+else()
+  message(FATAL_ERROR "Unsupported platform")
+endif()

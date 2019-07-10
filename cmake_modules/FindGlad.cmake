@@ -16,7 +16,6 @@ SET(_glad_HEADER_SEARCH_DIRS
   /usr/local/include
   /sw/include
   /opt/local/include
-  ${CMAKE_SOURCE_DIR}/vendor/glad
 )
 
 SET(_glad_LIBRARY_SEARCH_DIRS
@@ -27,7 +26,6 @@ SET(_glad_LIBRARY_SEARCH_DIRS
   /sw/lib
   /opt/local/lib
   ${GLAD_ROOT_DIR}/lib
-  ${CMAKE_SOURCE_DIR}/vendor/glad
 )
 
 # check environment variable
@@ -71,8 +69,6 @@ find_path(
   PATHS ${_glad_LIBRARY_SEARCH_DIRS}
   DOC "The directory where glad/glad.so resides")
 
-message(STATUS "Looking for glad in ${CMAKE_SOURCE_DIR}/vendor/glad")
-
 find_library(
   GLAD_LIBRARY
   NAMES glad
@@ -80,7 +76,7 @@ find_library(
   DOC "The glad library")
 
 # Handle REQUIRD argument, define *_FOUND variable
-find_package_handle_standard_args(GLAD DEFAULT_MSG GLAD_INCLUDE_DIR GLAD_LIBRARY_DIR GLAD_LIBRARY)
+#find_package_handle_standard_args(GLAD DEFAULT_MSG GLAD_INCLUDE_DIR GLAD_LIBRARY_DIR GLAD_LIBRARY)
 
 # Define GLAD_LIBRARY and GLAD_INCLUDE_DIRS
 if (GLAD_FOUND)

@@ -8,7 +8,8 @@ void Application::run()
 {
   while (true)
   {
-    
+    onUpdate();
+    onRender();
   }
 }
 

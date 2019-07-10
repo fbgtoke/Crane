@@ -1,5 +1,5 @@
 add_library(crane-window SHARED
-  WindowGlfw.cpp
+  Window.cpp
 )
 
 target_include_directories(crane-window PRIVATE
