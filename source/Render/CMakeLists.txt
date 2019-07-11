@@ -1,14 +1,15 @@
 target_sources(crane PUBLIC
 #  Camera.cpp
 #  IndexBuffer.cpp
-#  Renderer.cpp
-#  ShaderProgram.cpp
+  Renderer.cpp
+  Shader.cpp
+  ShaderProgram.cpp
 #  Texture.cpp
 #  TextureLoader.cpp
 #  Transform.cpp
   VertexArray.cpp
-#  VertexBuffer.cpp
-#  VertexBufferLayoutElement.cpp
+  VertexBuffer.cpp
+  BufferLayout.cpp
 )
 
 target_include_directories(crane PRIVATE

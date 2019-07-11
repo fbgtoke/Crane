@@ -3,6 +3,10 @@
 #include <cassert>
 #include <iostream>
 
+/* Placeholder */
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 namespace Crane {
 
 Application::Application()
@@ -49,7 +53,8 @@ void Application::onUpdate()
 
 void Application::onRender()
 {
-
+  glClear(GL_COLOR_BUFFER_BIT);
+  glClear(GL_DEPTH_BUFFER_BIT);
 }
 
 }

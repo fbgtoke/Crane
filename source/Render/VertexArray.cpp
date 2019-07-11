@@ -27,19 +27,37 @@ void VertexArray::destroy()
   m_Id = GL_INVALID_VALUE;
 }
 
-void VertexArray::bind()
+void VertexArray::bind() const
 {
   glBindVertexArray(m_Id);
 }
 
-void VertexArray::unbind()
+void VertexArray::unbind() const
 {
   glBindVertexArray(0);
 }
 
-unsigned int VertexArray::getId() const
+void VertexArray::addVertexBuffer(const VertexBuffer* buffer)
 {
-  return m_Id;
+  glBindVertexArray(m_Id);
+  buffer->bind();
+
+  unsigned int index = 0;
+  const BufferLayout& layout = buffer->getLayout();
+  for (const auto& e : layout)
+  {
+    glEnableVertexAttribArray(index);
+    glVertexAttribPointer(index,
+      e.getCount(),
+      BufferLayout::CraneDatatypeToOpenglDatatype(e.type),
+      e.normalized ? GL_TRUE : GL_FALSE,
+      layout.getStride(),
+      (const void*)e.offset
+    );
+    index++;
+  }
+
+  m_VertexBuffers.push_back(buffer);
 }
 
 }
