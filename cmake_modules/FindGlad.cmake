@@ -16,6 +16,8 @@ SET(_glad_HEADER_SEARCH_DIRS
   /usr/local/include
   /sw/include
   /opt/local/include
+  ${GLAD_ROOT_DIR}
+  ${GLAD_ROOT_DIR}/include
 )
 
 SET(_glad_LIBRARY_SEARCH_DIRS
@@ -25,6 +27,7 @@ SET(_glad_LIBRARY_SEARCH_DIRS
   /usr/local/lib
   /sw/lib
   /opt/local/lib
+  ${GLAD_ROOT_DIR}
   ${GLAD_ROOT_DIR}/lib
 )
 
@@ -65,13 +68,13 @@ find_path(
 # Try to use shared libraries
 find_path(
   GLAD_LIBRARY_DIR
-  NAMES glad/glad.so
+  NAMES libglad.a
   PATHS ${_glad_LIBRARY_SEARCH_DIRS}
-  DOC "The directory where glad/glad.a resides")
+  DOC "The directory where libglad.a resides")
 
 find_library(
   GLAD_LIBRARY
-  NAMES glad
+  NAMES libglad.a
   PATHS ${_glad_LIBRARY_SEARCH_DIRS}
   DOC "The glad library")
 

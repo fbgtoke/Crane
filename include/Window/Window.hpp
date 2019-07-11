@@ -1,6 +1,12 @@
 #pragma once
 
+#include "Event.hpp"
+
+#include <functional>
 #include <string>
+
+#define BIND_EVENT_CALLBACK(x) \
+  std::bind(&x, this, std::placeholders::_1)
 
 namespace Crane {
 
@@ -16,10 +22,11 @@ class Window {
 public:
   virtual ~Window() = default;
 
-  virtual void onUpdate() = 0;
+  virtual void update() = 0;
 
-  virtual unsigned int getWidht() const = 0;
+  virtual unsigned int getWidth() const = 0;
   virtual unsigned int getHeight() const = 0;
+  virtual void setEventCallback(std::function<void(Event* e)> callback) = 0;
 
   static Window* create(const WindowProperties& properties);
 };

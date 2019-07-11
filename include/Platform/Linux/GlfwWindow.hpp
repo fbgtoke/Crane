@@ -8,16 +8,18 @@
 
 namespace Crane {
 
-class GlfwWindow : public Window {
+class GlfwWindow : public Crane::Window {
 public:
   GlfwWindow(const WindowProperties& properties);
   ~GlfwWindow() override;
 
-  void onUpdate() override;
+  void update() override;
 
   unsigned int getWidth() const override;
   unsigned int getHeight() const override;
+  void setEventCallback(std::function<void(Event* e)> callback) override;
 
+  static bool initGlfw();
   static void errorCallback(int error, const char* description);
 
 private:
@@ -28,13 +30,14 @@ private:
     unsigned int width;
     unsigned int height;
 
+    std::function<void(Event* e)> callback;
     // more...
   };
 
   GlfwWindowProperties m_Properties;
   GLFWwindow* m_Window;
 
-  void init();
+  void init(const WindowProperties& properties);
   void fini();
 };
 
