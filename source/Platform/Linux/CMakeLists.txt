@@ -13,7 +13,6 @@ target_include_directories(crane PUBLIC
 )
 
 target_link_libraries(crane
-  ${GLAD_LIBRARY}
   ${GLFW_LIBRARY}
   dl
 )

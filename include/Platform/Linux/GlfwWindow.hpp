@@ -41,6 +41,6 @@ private:
   void fini();
 };
 
-};
+}
 
 #endif // CRANE_PLATFORM_LINUX

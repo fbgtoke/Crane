@@ -1,13 +1,12 @@
 #include "BufferLayout.hpp"
 
 #include <glad/glad.h>
-#include <GLFW/glfw3.h>
 
 namespace Crane {
 
 BufferLayoutElement::BufferLayoutElement(
   const std::string& name, ShaderDatatype type, bool norm
-) : name(name), type(type), size(ShaderDatatypeSize(type)), offset(0),
+) : name(name), type(type), size(Shader::getDatatypeSize(type)), offset(0),
     normalized(norm) {}
 
 BufferLayout::BufferLayout()

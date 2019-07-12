@@ -1,6 +1,6 @@
 #pragma once
 
-#include "ShaderDatatype.hpp"
+#include "Shader.hpp"
 
 #include <cstddef>
 #include <initializer_list>
