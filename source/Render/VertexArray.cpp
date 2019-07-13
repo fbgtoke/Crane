@@ -59,4 +59,12 @@ void VertexArray::addVertexBuffer(const VertexBuffer* buffer)
   m_VertexBuffers.push_back(buffer);
 }
 
+void VertexArray::setIndexBuffer(const IndexBuffer* buffer)
+{
+  glBindVertexArray(m_Id);
+  buffer->bind();
+  
+  m_IndexBuffer = buffer;
+}
+
 }

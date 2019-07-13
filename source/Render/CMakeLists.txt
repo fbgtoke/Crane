@@ -1,6 +1,6 @@
 target_sources(crane PUBLIC
 #  Camera.cpp
-#  IndexBuffer.cpp
+  IndexBuffer.cpp
   Renderer.cpp
   Shader.cpp
   ShaderProgram.cpp

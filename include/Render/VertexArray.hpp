@@ -1,5 +1,6 @@
 #pragma once
 
+#include "IndexBuffer.hpp"
 #include "VertexBuffer.hpp"
 
 #include <vector>
@@ -23,12 +24,16 @@ public:
     return m_VertexBuffers;
   }
 
+  void setIndexBuffer(const IndexBuffer* buffer);
+  inline const IndexBuffer* getIndexBuffer() const { return m_IndexBuffer; }
+
   inline unsigned int getId() const { return m_Id; }
 
 private:
   unsigned int m_Id;
 
   std::vector<const VertexBuffer*> m_VertexBuffers;
+  const IndexBuffer* m_IndexBuffer;
 };
 
 }
