@@ -1,5 +1,6 @@
 #ifdef CRANE_PLATFORM_LINUX
 #include "GlfwWindow.hpp"
+#include "GlfwInput.hpp"
 
 #include <iostream>
 
@@ -122,7 +123,20 @@ void GlfwWindow::init(const WindowProperties& properties)
     properties->callback(new WindowClosedEvent());
   });
 
-  
+  glfwSetKeyCallback(m_Window, [](GLFWwindow* window, int k, int code, int action, int mods)
+  {
+    GlfwWindowProperties* properties =
+      (GlfwWindowProperties*)glfwGetWindowUserPointer(window);
+      
+    if (action == GLFW_PRESS)
+    {
+      properties->callback(new KeyPressedEvent(GlfwToCrane(k), false));
+    }
+    else if (action == GLFW_REPEAT)
+    {
+      properties->callback(new KeyPressedEvent(GlfwToCrane(k), true));
+    }
+  });
 }
 
 void GlfwWindow::fini()

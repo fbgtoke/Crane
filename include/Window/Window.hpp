@@ -29,6 +29,7 @@ public:
   virtual void setEventCallback(std::function<void(Event* e)> callback) = 0;
 
   static Window* create(const WindowProperties& properties);
+  virtual void* getNativeWindow() = 0;
 };
 
 }

@@ -22,6 +22,8 @@ public:
   static bool initGlfw();
   static void errorCallback(int error, const char* description);
 
+  void* getNativeWindow() override { return (void*)m_Window; }
+
 private:
   static bool m_GlfwInitialized;
 

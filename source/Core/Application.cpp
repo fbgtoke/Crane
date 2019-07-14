@@ -8,6 +8,8 @@
 
 namespace Crane {
 
+Application* Application::m_Instance = nullptr;
+
 Application::Application()
   : m_Running(false)
 {  
@@ -20,6 +22,14 @@ Application::Application()
 Application::~Application()
 {
   delete m_Window;
+}
+
+Application* Application::get()
+{
+  if (Application::m_Instance == nullptr)
+    Application::m_Instance = createApplication();
+
+  return Application::m_Instance;
 }
 
 void Application::run()

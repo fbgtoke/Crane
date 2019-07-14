@@ -1,5 +1,7 @@
 #pragma once
 
+#include "Key.hpp"
+
 namespace Crane {
 
 class Event {
@@ -36,6 +38,24 @@ public:
 private:
   int m_Width;
   int m_Height;
+};
+
+/******************************************************************************/
+/* Keyboard Events                                                            */
+/******************************************************************************/
+class KeyPressedEvent : public Event {
+public:
+  KeyPressedEvent(Keyboard::Key k, bool repeat)
+    : m_Key(k), m_Repeat(repeat) {}
+
+  EventType getType() const override { return Event::KeyPressed; }
+
+  Keyboard::Key getKey() const { return m_Key; }
+  bool isRepeat() const { return m_Repeat; }
+
+private:
+  Keyboard::Key m_Key;
+  bool m_Repeat;
 };
 
 }

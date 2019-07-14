@@ -1,4 +1,5 @@
 target_sources(crane PUBLIC
+  ${CMAKE_CURRENT_SOURCE_DIR}/GlfwInput.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/GlfwWindow.cpp
 )
 
