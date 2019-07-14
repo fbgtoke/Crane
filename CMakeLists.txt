@@ -19,16 +19,9 @@ set(CMAKE_INSTALL_PREFIX "/home/fabio/Documents/Crane/build/install")
 set(GLAD_ROOT_DIR "/home/fabio/Documents/Crane/ThirdParty/glad/build/install")
 
 find_package(OpenGL REQUIRED)
-#find_package(GLM REQUIRED)
+find_package(GLM REQUIRED)
 find_package(Glad REQUIRED)
 find_package(GLFW REQUIRED)
-
-include_directories(${OPENGL_INCLUDE_DIR})
-include_directories(${GLFW_INCLUDE_DIRS})
-#include_directories(${GLM_INCLUDE_DIRS})
-include_directories(${GLAD_INCLUDE_DIRS})
-
-link_directories(${GLAD_LIBRARY_DIRS})
 
 if (CRANE_PLATFORM_LINUX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DCRANE_PLATFORM_LINUX")
