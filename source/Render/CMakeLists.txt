@@ -4,8 +4,7 @@ target_sources(crane PUBLIC
   Renderer.cpp
   Shader.cpp
   ShaderProgram.cpp
-#  Texture.cpp
-#  TextureLoader.cpp
+  Texture.cpp
 #  Transform.cpp
   VertexArray.cpp
   VertexBuffer.cpp

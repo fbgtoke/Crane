@@ -1,4 +1,5 @@
 target_sources(crane PUBLIC
+  BmpReader.cpp
   ObjReader.cpp
 )
 

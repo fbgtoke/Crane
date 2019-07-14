@@ -17,10 +17,14 @@ void Renderer::render(const VertexArray& vao, const ShaderProgram& program)
   );
 }
 
-void Renderer::renderIndexed(const VertexArray& vao, const ShaderProgram& program)
+void Renderer::renderIndexed(
+  const VertexArray& vao, const ShaderProgram& program,
+  const Texture& texture
+)
 {
   program.use();
   vao.bind();
+  texture.bind();
 
   glDrawElements(
     GL_TRIANGLES,
