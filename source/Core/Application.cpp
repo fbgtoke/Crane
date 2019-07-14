@@ -67,19 +67,38 @@ void Application::end()
 
 void Application::onEvent(Event* e)
 {
-
+  for (Layer* layer : m_LayerStack)
+  {
+    if (layer->onEvent(e))
+    {
+      break;
+    }
+  }
 }
 
 void Application::onUpdate()
 {
   assert(m_Window != nullptr);
   m_Window->update();
+
+  Time deltatime = Time::getGlobalTime() - m_LastFrame;
+  m_LastFrame = Time::getGlobalTime();
+
+  for (Layer* layer : m_LayerStack)
+  {
+    layer->onUpdate(deltatime);
+  }
 }
 
 void Application::onRender()
 {
   glClear(GL_COLOR_BUFFER_BIT);
   glClear(GL_DEPTH_BUFFER_BIT);
+
+  for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
+  {
+    (*it)->onRender();
+  }
 }
 
 }

@@ -14,41 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
-
 #include "LayerStack.hpp"
-#include "Time.hpp"
-#include "Window/Window.hpp"
 
 namespace Crane {
 
-class Application {
-public:
-  virtual ~Application();
+LayerStack::~LayerStack()
+{
+  for (Layer* layer : m_Layers)
+  {
+    delete layer;
+  }
+}
 
-  static Application* get();
-  void run();
-  void end();
-
-  inline Window* getWindow() { return m_Window; }
-  inline LayerStack& getLayerStack() { return m_LayerStack; }
-
-protected:
-  Application();
-
-  static Application* m_Instance;
-  static Application* createApplication();
-
-  virtual void onEvent(Event* e);
-  virtual void onUpdate();
-  virtual void onRender();
-
-private:
-  Time m_LastFrame;
-  Window* m_Window;
-  LayerStack m_LayerStack;
-
-  bool m_Running;
-};
+void LayerStack::addLayer(Layer* layer)
+{
+  m_Layers.push_back(layer);
+}
 
 }

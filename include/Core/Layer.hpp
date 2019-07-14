@@ -16,39 +16,18 @@
 
 #pragma once
 
-#include "LayerStack.hpp"
 #include "Time.hpp"
-#include "Window/Window.hpp"
+#include "Window/Event.hpp"
 
 namespace Crane {
 
-class Application {
+class Layer {
 public:
-  virtual ~Application();
+  virtual ~Layer() = default;
 
-  static Application* get();
-  void run();
-  void end();
-
-  inline Window* getWindow() { return m_Window; }
-  inline LayerStack& getLayerStack() { return m_LayerStack; }
-
-protected:
-  Application();
-
-  static Application* m_Instance;
-  static Application* createApplication();
-
-  virtual void onEvent(Event* e);
-  virtual void onUpdate();
-  virtual void onRender();
-
-private:
-  Time m_LastFrame;
-  Window* m_Window;
-  LayerStack m_LayerStack;
-
-  bool m_Running;
+  virtual bool onEvent(Event* e) { return false; }
+  virtual void onUpdate(Time timestep) {}
+  virtual void onRender() const {}
 };
 
 }

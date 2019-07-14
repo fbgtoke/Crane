@@ -23,6 +23,8 @@
 
 /* Core                                                                       */
 #include "Core/Application.hpp"
+#include "Core/Layer.hpp"
+#include "Core/LayerStack.hpp"
 #include "Core/Time.hpp"
 
 /* Render                                                                     */
