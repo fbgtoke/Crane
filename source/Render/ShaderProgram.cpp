@@ -67,4 +67,46 @@ void ShaderProgram::use() const
   glUseProgram(m_Id);
 }
 
+void ShaderProgram::setUniform1i(unsigned int location,
+  int v
+) const
+{
+  glUniform1i(location, v);
+}
+
+void ShaderProgram::setUniform1f(unsigned int location,
+float v
+) const
+{
+  glUniform1f(location, v);
+}
+
+void ShaderProgram::setUniform2f(unsigned int location, 
+  float v1, float v2
+) const
+{
+  glUniform2f(location, v1, v2);
+}
+
+void ShaderProgram::setUniform3f(unsigned int location, 
+  float v1, float v2, float v3
+) const
+{
+  glUniform3f(location, v1, v2, v3);
+}
+
+void ShaderProgram::setUniformMat3f(unsigned int location,
+  float* v
+) const
+{
+  glUniformMatrix3fv(location, 1, GL_FALSE, v);
+}
+
+void ShaderProgram::setUniformMat4f(unsigned int location,
+  float* v
+) const
+{
+  glUniformMatrix4fv(location, 1, GL_FALSE, v);
+}
+
 }
