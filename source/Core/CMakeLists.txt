@@ -1,5 +1,6 @@
 target_sources(crane PUBLIC
   Application.cpp
+  Time.cpp
 #  Scene.cpp
 )
 

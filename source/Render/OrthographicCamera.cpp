@@ -36,8 +36,8 @@ void OrthographicCamera::rotate(float v)
 void OrthographicCamera::recomputeMatrices()
 {
   m_ViewMatrix = glm::mat4(1.f);
-  m_ViewMatrix = glm::translate(m_ViewMatrix, -m_Position);
   m_ViewMatrix = glm::rotate(m_ViewMatrix, -m_Rotation, { 0.f, 0.f, -1.f });
+  m_ViewMatrix = glm::translate(m_ViewMatrix, -m_Position);
 
   m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 }
