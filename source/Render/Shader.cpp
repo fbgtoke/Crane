@@ -16,11 +16,12 @@
 
 #include "Shader.hpp"
 
+#include "Core/Log.hpp"
+
 #include <glad/glad.h>
 
 #include <cassert>
 #include <fstream>
-#include <iostream>
 #include <streambuf>
 
 namespace Crane {
@@ -49,8 +50,8 @@ void Shader::create(ShaderType t)
     m_Id = glCreateShader(GL_FRAGMENT_SHADER);
     break;
   default:
-    std::cerr << "Unrecognized shader type" << std::endl;
-    exit(EXIT_FAILURE);
+    CRANE_LOG_FATAL("Unrecognized shader type");
+
   }
 }
 
@@ -68,7 +69,7 @@ bool Shader::compileFromFile(const std::string& file)
 
   if (!fstream.is_open())
   {
-    m_InfoLog = "Error opening shader " + file;
+    CRANE_LOG_WARN("Could not open shader file {0}", file);
     return false;
   }
 
@@ -99,9 +100,9 @@ bool Shader::compileFromSource(const std::string& src)
     int max_length;
     glGetShaderiv(m_Id, GL_INFO_LOG_LENGTH, &max_length);
 
-    m_InfoLog = std::string(max_length, '\0');
+    std::string m_InfoLog = std::string(max_length, '\0');
     glGetShaderInfoLog(m_Id, max_length, &max_length, &m_InfoLog[0]);
-
+    CRANE_LOG_ERROR("Error compiling shader\n\t{0}", m_InfoLog);
     return false;
   }
 

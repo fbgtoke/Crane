@@ -15,9 +15,10 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Application.hpp"
+#include "Log.hpp"
+#include "Logo.hpp"
 
 #include <cassert>
-#include <iostream>
 
 /* Placeholder */
 #include <GL/gl.h>
@@ -29,6 +30,9 @@ Application* Application::m_Instance = nullptr;
 Application::Application()
   : m_Running(false)
 {  
+  Log::init();
+  CRANE_LOG_INFO("{0}", CraneLogo);
+
   m_Window = Window::create({ "CraneSandbox", 480, 480 });
   assert(m_Window != nullptr);
 

@@ -14,45 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
+#include "Log.hpp"
 
-#include <string>
+#include <spdlog/sinks/stdout_color_sinks.h>
 
 namespace Crane {
 
-typedef enum {
-  Int, Int2, Int3, Int4,
-  Float, Float2, Float3, Float4,
-  Mat3, Mat4
-} ShaderDatatype;
+std::shared_ptr<spdlog::logger> Log::m_Logger;
 
-class Shader {
-public:
-  typedef enum {
-    Unknown, Vertex, Fragment
-  } ShaderType;
+void Log::init()
+{
+  spdlog::set_pattern("%^[%T] %n: %v%$");
 
-  Shader();
-  ~Shader();
-
-  void create(ShaderType t);
-  void destroy();
-
-  bool compileFromFile(const std::string& file);
-  bool compileFromSource(const std::string& src);
-
-  inline ShaderType getType() const { return m_Type; }
-  inline unsigned int getId() const { return m_Id; }
-
-  inline bool isCompiled() const { return m_Compiled; }
-
-  static std::size_t getDatatypeSize(ShaderDatatype t);
-
-private:
-  ShaderType m_Type;
-  int m_Id;
-
-  bool m_Compiled;
-};
+  m_Logger = spdlog::stdout_color_mt("CRANE");
+  m_Logger->set_level(spdlog::level::trace);
+}
 
 }

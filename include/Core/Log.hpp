@@ -16,43 +16,36 @@
 
 #pragma once
 
-#include <string>
+#include <spdlog/spdlog.h>
+
+#include <memory>
 
 namespace Crane {
 
-typedef enum {
-  Int, Int2, Int3, Int4,
-  Float, Float2, Float3, Float4,
-  Mat3, Mat4
-} ShaderDatatype;
-
-class Shader {
+class Log {
 public:
-  typedef enum {
-    Unknown, Vertex, Fragment
-  } ShaderType;
+  static void init();
 
-  Shader();
-  ~Shader();
-
-  void create(ShaderType t);
-  void destroy();
-
-  bool compileFromFile(const std::string& file);
-  bool compileFromSource(const std::string& src);
-
-  inline ShaderType getType() const { return m_Type; }
-  inline unsigned int getId() const { return m_Id; }
-
-  inline bool isCompiled() const { return m_Compiled; }
-
-  static std::size_t getDatatypeSize(ShaderDatatype t);
+  inline static std::shared_ptr<spdlog::logger> getLogger() { return m_Logger; }
 
 private:
-  ShaderType m_Type;
-  int m_Id;
-
-  bool m_Compiled;
+  static std::shared_ptr<spdlog::logger> m_Logger;
 };
 
 }
+
+#define CRANE_LOG_TRACE(...) \
+  ::Crane::Log::getLogger()->trace(__VA_ARGS__)
+
+#define CRANE_LOG_INFO(...) \
+  ::Crane::Log::getLogger()->info(__VA_ARGS__)
+
+#define CRANE_LOG_WARN(...) \
+  ::Crane::Log::getLogger()->warn(__VA_ARGS__)
+
+#define CRANE_LOG_ERROR(...) \
+  ::Crane::Log::getLogger()->error(__VA_ARGS__)
+
+#define CRANE_LOG_FATAL(...) \
+  ::Crane::Log::getLogger()->critical(__VA_ARGS__); \
+  exit(EXIT_FAILURE)

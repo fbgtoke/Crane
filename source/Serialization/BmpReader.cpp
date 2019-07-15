@@ -15,8 +15,8 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "BmpReader.hpp"
+#include "Core/Log.hpp"
 
-#include <iostream>
 #include <fstream>
 
 namespace Crane {
@@ -32,7 +32,7 @@ bool BmpReader::read(
   std::ifstream fstream(filename, std::ios::binary);
   if (!fstream.is_open())
   {
-    std::cerr << "Error opening file " << filename << std::endl;
+    CRANE_LOG_WARN("Could not open BMP texture file {0}", filename);
     return false;
   }
 
@@ -44,7 +44,7 @@ bool BmpReader::read(
 
   if (!fstream)
   {
-    std::cerr << "Error while reading BMP header" << std::endl;
+    CRANE_LOG_WARN("Ill-formed BMP header in texture file {0}", filename);
     return false;
   }
 
@@ -66,7 +66,7 @@ bool BmpReader::read(
 
   if (!fstream)
   {
-    std::cerr << "Error while reading BMP body" << std::endl;
+    CRANE_LOG_WARN("Ill-formed BMP body in texture file {0}", filename);
     return false;
   }
 

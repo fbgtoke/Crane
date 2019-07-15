@@ -18,7 +18,7 @@
 #include "GlfwWindow.hpp"
 #include "GlfwInput.hpp"
 
-#include <iostream>
+#include "Core/Log.hpp"
 
 namespace Crane {
 
@@ -72,7 +72,7 @@ void GlfwWindow::setEventCallback(std::function<void(Event* e)> callback)
 
 void GlfwWindow::errorCallback(int error, const char* description)
 {
-  std::cerr << "GLFW Error #" << error << ": " << description << "\n";
+  CRANE_LOG_ERROR("GLFW Error #{0}: {1}", error, description);
 }
 
 void GlfwWindow::init(const WindowProperties& properties)
@@ -86,8 +86,7 @@ void GlfwWindow::init(const WindowProperties& properties)
   {
     if (!glfwInit())
     {
-      std::cerr << "Error: Could not initialize GLFW library\n";
-      exit(EXIT_FAILURE);
+      CRANE_LOG_FATAL("Could not initialize GLFW library");
     }
 
     glfwSetErrorCallback(errorCallback);
@@ -108,8 +107,7 @@ void GlfwWindow::init(const WindowProperties& properties)
 
   if (!m_Window)
   {
-    std::cerr << "Error: Could not create window\n";
-    exit(EXIT_FAILURE);
+    CRANE_LOG_FATAL("Could not create window");
   }
 
   glfwMakeContextCurrent(m_Window);

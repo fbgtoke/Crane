@@ -15,6 +15,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "ObjReader.hpp"
+#include "Core/Log.hpp"
 
 #include <fstream>
 
@@ -31,7 +32,7 @@ bool ObjReader::read(
   std::ifstream fstream(filename);
   if (!fstream.is_open())
   {
-    std::cerr << "Error opening file " << filename << std::endl;
+    CRANE_LOG_WARN("Could not open OBJ mesh file {0}", filename);
     return false;
   }
 
@@ -80,7 +81,7 @@ bool ObjReader::read(
     /* Unrecognized */
     else
     {
-      std::cerr << "Error while reading file " << filename << std::endl;
+      CRANE_LOG_WARN("Unrecognized sequence in OBJ mesh file {0}", filename);
       return false;
     }
   }

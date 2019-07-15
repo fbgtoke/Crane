@@ -31,6 +31,9 @@ add_library(crane SHARED)
 
 add_subdirectory(source)
 
+add_subdirectory(ThirdParty/spdlog)
+target_link_libraries(crane spdlog::spdlog_header_only)
+
 install(TARGETS crane
   LIBRARY DESTINATION lib
 )
