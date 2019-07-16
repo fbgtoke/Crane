@@ -17,11 +17,12 @@
 #include "Transform.hpp"
 
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 namespace Crane {
 
 Transform::Transform()
-  : m_Position(0.f), m_Rotation(0.f), m_Scale(1.f), m_TransformMatrix(1.f) {}
+  : m_Position(0.f), m_Rotation(), m_Scale(1.f), m_TransformMatrix(1.f) {}
 
 void Transform::setPosition(const glm::vec3& position)
 {
@@ -34,11 +35,17 @@ void Transform::move(const glm::vec3& v)
 
 void Transform::setRotation(const glm::vec3& rotation)
 {
-  m_Rotation = rotation;
+  glm::quat qx = glm::angleAxis(rotation.x, glm::vec3(1.f, 0.f, 0.f));
+  glm::quat qy = glm::angleAxis(rotation.y, glm::vec3(0.f, 1.f, 0.f));
+  glm::quat qz = glm::angleAxis(rotation.z, glm::vec3(0.f, 0.f, 1.f));
+  m_Rotation = qx * qy * qz;
 }
 void Transform::rotate(const glm::vec3& a)
 {
-  m_Rotation += a;
+  glm::quat qx = glm::angleAxis(a.x, glm::vec3(1.f, 0.f, 0.f));
+  glm::quat qy = glm::angleAxis(a.y, glm::vec3(0.f, 1.f, 0.f));
+  glm::quat qz = glm::angleAxis(a.z, glm::vec3(0.f, 0.f, 1.f));
+  m_Rotation = qx * qy * qz * m_Rotation;
 }
 
 void Transform::setScale(const glm::vec3& scale)
@@ -52,18 +59,10 @@ void Transform::scale(const glm::vec3& s)
 
 void Transform::recomputeMatrix()
 {
-  m_TransformMatrix = glm::mat4(1.f);
-
   m_TransformMatrix =
-    glm::translate(m_TransformMatrix, m_Position);
-  m_TransformMatrix =
-    glm::rotate(m_TransformMatrix, m_Rotation.z, { 0.f, 0.f, 1.f });
-  m_TransformMatrix =
-    glm::rotate(m_TransformMatrix, m_Rotation.y, { 0.f, 1.f, 0.f });
-  m_TransformMatrix =
-    glm::rotate(m_TransformMatrix, m_Rotation.x, { 1.f, 0.f, 0.f });
-  m_TransformMatrix =
-    glm::scale(m_TransformMatrix, m_Scale);
+    glm::translate(glm::mat4(1.f), m_Position) *
+    glm::toMat4(m_Rotation) *
+    glm::scale(glm::mat4(1.f), m_Scale);
 }
 
 

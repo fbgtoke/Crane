@@ -16,6 +16,7 @@
 
 #pragma once
 
+#include <glm/gtx/quaternion.hpp>
 #include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
 
@@ -43,7 +44,7 @@ public:
 
 private:
   glm::vec3 m_Position;
-  glm::vec3 m_Rotation;
+  glm::quat m_Rotation;
   glm::vec3 m_Scale;
 
   glm::mat4 m_TransformMatrix;
