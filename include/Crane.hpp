@@ -36,6 +36,7 @@
 #include "Render/Shader.hpp"
 #include "Render/ShaderProgram.hpp"
 #include "Render/Texture.hpp"
+#include "Render/Transform.hpp"
 #include "Render/VertexArray.hpp"
 #include "Render/VertexBuffer.hpp"
 

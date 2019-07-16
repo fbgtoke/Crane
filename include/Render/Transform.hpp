@@ -16,56 +16,37 @@
 
 #pragma once
 
-#include "Camera.hpp"
-
+#include <glm/mat4x4.hpp>
 #include <glm/vec3.hpp>
 
 namespace Crane {
- 
-class OrthographicCamera : public Camera {
+
+class Transform {
 public:
-  OrthographicCamera(
-    float l, float r, float b, float t, 
-    float znear = -1.f, float zfar = 1.f
-  );
-
-  ~OrthographicCamera() override = default;
-
-  const glm::mat4& getViewMatrix() const override
-  {
-    return  m_ViewMatrix;
-  }
-
-  const glm::mat4& getProjectionMatrix() const override
-  {
-    return  m_ProjectionMatrix;
-  }
-
-  const glm::mat4& getViewProjectionMatrix() const override
-  {
-    return  m_ViewProjectionMatrix;
-  }
+  Transform();
 
   void setPosition(const glm::vec3& position);
   void move(const glm::vec3& v);
 
-  void setRotation(float rotation);
-  void rotate(float v);
+  void setRotation(const glm::vec3& rotation);
+  void rotate(const glm::vec3& a);
 
-  void recomputeMatrices();
+  void setScale(const glm::vec3& scale);
+  void scale(const glm::vec3& s);
 
-  inline glm::vec3 getPosition() const { return m_Position; }
-  inline float getRotation() const { return m_Rotation; }
+  void recomputeMatrix();
+
+  inline const glm::mat4& getTransformMatrix() const
+  {
+    return m_TransformMatrix;
+  }
 
 private:
-  /* View */
   glm::vec3 m_Position;
-  float m_Rotation;
+  glm::vec3 m_Rotation;
+  glm::vec3 m_Scale;
 
-  /* Matrices */
-  glm::mat4 m_ViewMatrix;
-  glm::mat4 m_ProjectionMatrix;
-  glm::mat4 m_ViewProjectionMatrix;
+  glm::mat4 m_TransformMatrix;
 };
 
 }

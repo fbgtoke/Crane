@@ -41,8 +41,8 @@ public:
   void setUniform1f(unsigned int location, float v) const;
   void setUniform2f(unsigned int location, float v1, float v2) const;
   void setUniform3f(unsigned int location, float v1, float v2, float v3) const;
-  void setUniformMat3f(unsigned int location, float* v) const;
-  void setUniformMat4f(unsigned int location, float* v) const;
+  void setUniformMat3f(unsigned int location, const float* v) const;
+  void setUniformMat4f(unsigned int location, const float* v) const;
 
   inline unsigned int getId() const { return m_Id; }
   inline bool isLinked() const { return m_Linked; }

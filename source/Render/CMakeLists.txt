@@ -5,7 +5,7 @@ target_sources(crane PUBLIC
   Shader.cpp
   ShaderProgram.cpp
   Texture.cpp
-#  Transform.cpp
+  Transform.cpp
   VertexArray.cpp
   VertexBuffer.cpp
   BufferLayout.cpp

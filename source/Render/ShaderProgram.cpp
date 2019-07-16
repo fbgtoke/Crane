@@ -112,14 +112,14 @@ void ShaderProgram::setUniform3f(unsigned int location,
 }
 
 void ShaderProgram::setUniformMat3f(unsigned int location,
-  float* v
+  const float* v
 ) const
 {
   glUniformMatrix3fv(location, 1, GL_FALSE, v);
 }
 
 void ShaderProgram::setUniformMat4f(unsigned int location,
-  float* v
+  const float* v
 ) const
 {
   glUniformMatrix4fv(location, 1, GL_FALSE, v);
