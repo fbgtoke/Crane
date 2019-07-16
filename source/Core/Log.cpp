@@ -14,6 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
+#ifdef DEBUG
+
 #include "Log.hpp"
 
 #include <spdlog/sinks/stdout_color_sinks.h>
@@ -31,3 +33,5 @@ void Log::init()
 }
 
 }
+
+#endif // DEBUG

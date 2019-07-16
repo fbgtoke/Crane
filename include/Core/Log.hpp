@@ -16,6 +16,8 @@
 
 #pragma once
 
+#ifdef DEBUG
+
 #include <spdlog/spdlog.h>
 
 #include <memory>
@@ -49,3 +51,26 @@ private:
 #define CRANE_LOG_FATAL(...) \
   ::Crane::Log::getLogger()->critical(__VA_ARGS__); \
   exit(EXIT_FAILURE)
+
+#else
+
+namespace Crane {
+
+class Log {
+public:
+  static void init() {};
+};
+
+}
+
+#define CRANE_LOG_TRACE(...)
+
+#define CRANE_LOG_INFO(...)
+
+#define CRANE_LOG_WARN(...)
+
+#define CRANE_LOG_ERROR(...)
+
+#define CRANE_LOG_FATAL(...)
+
+#endif // DEBUG

@@ -9,31 +9,37 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -g ${CXX_WARNINGS} -std=c++11")
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/cmake_modules" ${CMAKE_MODULE_PATH})
-
 set(CMAKE_INSTALL_RPATH_USE_LINK_PATH TRUE)
 
-set(CRANE_PLATFORM_LINUX ON)
-
 ## Placeholder ##
+set(CRANE_PLATFORM_LINUX ON)
+set(CRANE_DEBUG ON)
 set(CMAKE_INSTALL_PREFIX "/home/fabio/Documents/Crane/build/install")
 set(GLAD_ROOT_DIR "/home/fabio/Documents/Crane/ThirdParty/glad/build/install")
 
+## Required packages (needs refactoring) ##
 find_package(OpenGL REQUIRED)
 find_package(GLM REQUIRED)
 find_package(Glad REQUIRED)
 find_package(GLFW REQUIRED)
 
+## Build switches ##
 if (CRANE_PLATFORM_LINUX)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DCRANE_PLATFORM_LINUX")
 endif()
 
+if (CRANE_DEBUG)
+  add_subdirectory(ThirdParty/spdlog)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DDEBUG")
+endif()
+
+## Create target library ##
 add_library(crane SHARED)
 
+## Add sources to target ##
 add_subdirectory(source)
 
-add_subdirectory(ThirdParty/spdlog)
-target_link_libraries(crane spdlog::spdlog_header_only)
-
+## Install commands ##
 install(TARGETS crane
   LIBRARY DESTINATION lib
 )
