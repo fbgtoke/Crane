@@ -15,6 +15,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "VertexArray.hpp"
+#include "Core/Log.hpp"
 
 #include <glad/glad.h>
 
@@ -33,42 +34,42 @@ VertexArray::~VertexArray()
 
 void VertexArray::create()
 {
-  glGenVertexArrays(1, &m_Id);
+  CRANE_GL_CALL(glGenVertexArrays(1, &m_Id));
 }
 
 void VertexArray::destroy()
 {
-  glDeleteVertexArrays(1, &m_Id);
+  CRANE_GL_CALL(glDeleteVertexArrays(1, &m_Id));
   m_Id = GL_INVALID_VALUE;
 }
 
 void VertexArray::bind() const
 {
-  glBindVertexArray(m_Id);
+  CRANE_GL_CALL(glBindVertexArray(m_Id));
 }
 
 void VertexArray::unbind() const
 {
-  glBindVertexArray(0);
+  CRANE_GL_CALL(glBindVertexArray(0));
 }
 
 void VertexArray::addVertexBuffer(const VertexBuffer* buffer)
 {
-  glBindVertexArray(m_Id);
+  CRANE_GL_CALL(glBindVertexArray(m_Id));
   buffer->bind();
 
   unsigned int index = 0;
   const BufferLayout& layout = buffer->getLayout();
   for (const auto& e : layout)
   {
-    glEnableVertexAttribArray(index);
-    glVertexAttribPointer(index,
+    CRANE_GL_CALL(glEnableVertexAttribArray(index));
+    CRANE_GL_CALL(glVertexAttribPointer(index,
       e.getCount(),
       BufferLayout::CraneDatatypeToOpenglDatatype(e.type),
       e.normalized ? GL_TRUE : GL_FALSE,
       layout.getStride(),
       (const void*)e.offset
-    );
+    ));
     index++;
   }
 
@@ -77,7 +78,7 @@ void VertexArray::addVertexBuffer(const VertexBuffer* buffer)
 
 void VertexArray::setIndexBuffer(const IndexBuffer* buffer)
 {
-  glBindVertexArray(m_Id);
+  CRANE_GL_CALL(glBindVertexArray(m_Id));
   buffer->bind();
   
   m_IndexBuffer = buffer;

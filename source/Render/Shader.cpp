@@ -44,10 +44,10 @@ void Shader::create(ShaderType t)
   switch (m_Type)
   {
   case ShaderType::Vertex:
-    m_Id = glCreateShader(GL_VERTEX_SHADER);
+    m_Id = CRANE_GL_CALL(glCreateShader(GL_VERTEX_SHADER));
     break;
   case ShaderType::Fragment:
-    m_Id = glCreateShader(GL_FRAGMENT_SHADER);
+    m_Id = CRANE_GL_CALL(glCreateShader(GL_FRAGMENT_SHADER));
     break;
   default:
     CRANE_LOG_FATAL("Unrecognized shader type");
@@ -57,7 +57,7 @@ void Shader::create(ShaderType t)
 
 void Shader::destroy()
 {
-  glDeleteShader(m_Id);
+  CRANE_GL_CALL(glDeleteShader(m_Id));
   m_Id = GL_INVALID_VALUE;
 }
 
@@ -87,21 +87,23 @@ bool Shader::compileFromSource(const std::string& src)
 
   const char* src_ptr = src.c_str();
 
-  glShaderSource(m_Id, 1, &src_ptr, 0);
-  glCompileShader(m_Id);
+  CRANE_GL_CALL(glShaderSource(m_Id, 1, &src_ptr, 0));
+  CRANE_GL_CALL(glCompileShader(m_Id));
 
   int compiled = 0;
-  glGetShaderiv(m_Id, GL_COMPILE_STATUS, &compiled);
+  CRANE_GL_CALL(glGetShaderiv(m_Id, GL_COMPILE_STATUS, &compiled));
 
   m_Compiled = (compiled != 0);
 
   if (!m_Compiled)
   {
     int max_length;
-    glGetShaderiv(m_Id, GL_INFO_LOG_LENGTH, &max_length);
+    CRANE_GL_CALL(glGetShaderiv(m_Id, GL_INFO_LOG_LENGTH, &max_length));
 
     std::string m_InfoLog = std::string(max_length, '\0');
-    glGetShaderInfoLog(m_Id, max_length, &max_length, &m_InfoLog[0]);
+    CRANE_GL_CALL(
+      glGetShaderInfoLog(m_Id, max_length, &max_length, &m_InfoLog[0])
+    );
     CRANE_LOG_ERROR("Error compiling shader\n\t{0}", m_InfoLog);
     return false;
   }

@@ -33,11 +33,20 @@ public:
 
   void setTextureUnit(unsigned int unit);
 
+  void setFormat(int format);
+  void setType(int type);
+
+  void setWrapS(int wrap);
+  void setWrapT(int wrap);
+
+  void setMinFilter(int filter);
+  void setMagFilter(int filter);
+
   inline unsigned int getId() const { return m_Id; }
   inline std::size_t getWidth() const { return m_Width; }
   inline std::size_t getHeight() const { return m_Height; }
 
-  inline unsigned int getTextureUnit() const { return m_TextureUnit; }
+  unsigned int getTextureUnit() const;
 
 private:
   unsigned int m_Id;
@@ -45,6 +54,15 @@ private:
   std::size_t m_Width;
   std::size_t m_Height;
   unsigned int m_TextureUnit;
+
+  int m_Format;
+  int m_Type;
+
+  int m_WrapS;
+  int m_WrapT;
+
+  int m_MinFilter;
+  int m_MagFilter;
 };
 
 }

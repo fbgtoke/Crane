@@ -15,6 +15,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Renderer.hpp"
+#include "Core/Log.hpp"
 
 #include <glad/glad.h>
 
@@ -39,15 +40,18 @@ void Renderer::renderIndexed(
 )
 {
   program.use();
-  vao.bind();
-  texture.bind();
 
-  glDrawElements(
+  vao.bind();
+
+  texture.bind();
+  program.setUniform1i("tex", texture.getTextureUnit());
+
+  CRANE_GL_CALL(glDrawElements(
     GL_TRIANGLES,
     vao.getIndexBuffer()->getCount(),
     GL_UNSIGNED_INT,
     nullptr
-  );
+  ));
 }
 
 }

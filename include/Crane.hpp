@@ -30,6 +30,7 @@
 /* Render                                                                     */
 #include "Render/BufferLayout.hpp"
 #include "Render/Camera.hpp"
+#include "Render/Font.hpp"
 #include "Render/IndexBuffer.hpp"
 #include "Render/OrthographicCamera.hpp"
 #include "Render/Renderer.hpp"

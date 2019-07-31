@@ -15,6 +15,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "VertexBuffer.hpp"
+#include "Core/Log.hpp"
 
 #include <glad/glad.h>
 
@@ -33,25 +34,25 @@ VertexBuffer::~VertexBuffer()
 
 void VertexBuffer::create(std::size_t size, void* data)
 {
-  glGenBuffers(1, &m_Id);
-  glBindBuffer(GL_ARRAY_BUFFER, m_Id);
-  glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW);
+  CRANE_GL_CALL(glGenBuffers(1, &m_Id));
+  CRANE_GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, m_Id));
+  CRANE_GL_CALL(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
 }
 
 void VertexBuffer::destroy()
 {
-  glDeleteBuffers(1, &m_Id);
+  CRANE_GL_CALL(glDeleteBuffers(1, &m_Id));
   m_Id = GL_INVALID_VALUE;
 }
 
 void VertexBuffer::bind() const
 {
-  glBindBuffer(GL_ARRAY_BUFFER, m_Id);
+  CRANE_GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, m_Id));
 }
 
 void VertexBuffer::unbind() const
 {
-  glBindBuffer(GL_ARRAY_BUFFER, 0);
+  CRANE_GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, 0));
 }
 
 void VertexBuffer::setLayout(const BufferLayout& layout)

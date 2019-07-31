@@ -65,5 +65,9 @@ void Transform::recomputeMatrix()
     glm::scale(glm::mat4(1.f), m_Scale);
 }
 
+glm::vec3 Transform::getRotationAngles() const
+{
+  return glm::eulerAngles(m_Rotation);
+}
 
 }

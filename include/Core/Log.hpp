@@ -52,6 +52,18 @@ private:
   ::Crane::Log::getLogger()->critical(__VA_ARGS__); \
   exit(EXIT_FAILURE)
 
+#define CRANE_GL_CALL(...)                                        \
+  __VA_ARGS__;                                                    \
+  {                                                               \
+    int _err;                                                     \
+    while ((_err = glGetError()))                                 \
+    {                                                             \
+      CRANE_LOG_FATAL(                                            \
+        "{0}:{1} OpenGL Error: 0x{2:x}", __FILE__, __LINE__, _err \
+      );                                                          \
+    }                                                             \
+  }                                                               
+
 #else
 
 namespace Crane {
@@ -72,5 +84,7 @@ public:
 #define CRANE_LOG_ERROR(...)
 
 #define CRANE_LOG_FATAL(...)
+
+#define CRANE_OPENGL_CALL(...)
 
 #endif // DEBUG

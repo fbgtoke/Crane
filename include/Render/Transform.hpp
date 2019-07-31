@@ -37,6 +37,12 @@ public:
 
   void recomputeMatrix();
 
+  inline const glm::vec3& getPosition() const { return m_Position; }
+  inline const glm::quat& getRotation() const { return m_Rotation; }
+  inline const glm::vec3& getScale() const { return m_Scale; }
+
+  glm::vec3 getRotationAngles() const;
+
   inline const glm::mat4& getTransformMatrix() const
   {
     return m_TransformMatrix;
