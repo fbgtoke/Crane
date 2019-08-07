@@ -14,7 +14,7 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "Renderer.hpp"
+#include "Render/Renderer.hpp"
 #include "Core/Log.hpp"
 
 #include <glad/glad.h>

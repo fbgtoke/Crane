@@ -1,6 +1,7 @@
 target_sources(crane PUBLIC
   OpenGLBufferLayout.cpp
   OpenGLIndexBuffer.cpp
+  OpenGLRenderer.cpp
   OpenGLShader.cpp
   OpenGLShaderProgram.cpp
   OpenGLVertexArray.cpp

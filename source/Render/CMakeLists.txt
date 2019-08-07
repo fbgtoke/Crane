@@ -1,7 +1,6 @@
 target_sources(crane PUBLIC
   Font.cpp
   OrthographicCamera.cpp
-  Renderer.cpp
   Texture.cpp
   Transform.cpp
   BufferLayout.cpp
