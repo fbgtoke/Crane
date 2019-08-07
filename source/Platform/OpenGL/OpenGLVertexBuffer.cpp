@@ -14,17 +14,21 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "VertexBuffer.hpp"
+#include "OpenGLVertexBuffer.hpp"
 #include "Core/Log.hpp"
 
 #include <glad/glad.h>
 
 namespace Crane {
 
-VertexBuffer::VertexBuffer()
-  : m_Id(GL_INVALID_VALUE) {}
+OpenGLVertexBuffer::OpenGLVertexBuffer(std::size_t size, void* data)
+{
+  CRANE_GL_CALL(glGenBuffers(1, &m_Id));
+  CRANE_GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, m_Id));
+  CRANE_GL_CALL(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
+}
 
-VertexBuffer::~VertexBuffer()
+OpenGLVertexBuffer::~OpenGLVertexBuffer()
 {
   if (m_Id != GL_INVALID_VALUE)
   {
@@ -32,32 +36,28 @@ VertexBuffer::~VertexBuffer()
   }
 }
 
-void VertexBuffer::create(std::size_t size, void* data)
-{
-  CRANE_GL_CALL(glGenBuffers(1, &m_Id));
-  CRANE_GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, m_Id));
-  CRANE_GL_CALL(glBufferData(GL_ARRAY_BUFFER, size, data, GL_STATIC_DRAW));
-}
-
-void VertexBuffer::destroy()
+void OpenGLVertexBuffer::destroy()
 {
   CRANE_GL_CALL(glDeleteBuffers(1, &m_Id));
   m_Id = GL_INVALID_VALUE;
 }
 
-void VertexBuffer::bind() const
+void OpenGLVertexBuffer::bind() const
 {
   CRANE_GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, m_Id));
 }
 
-void VertexBuffer::unbind() const
+void OpenGLVertexBuffer::unbind() const
 {
   CRANE_GL_CALL(glBindBuffer(GL_ARRAY_BUFFER, 0));
 }
 
-void VertexBuffer::setLayout(const BufferLayout& layout)
+/******************************************************************************/
+/* Implementation of static methods from VertexBuffer class                   */
+/******************************************************************************/
+VertexBuffer* VertexBuffer::create(std::size_t size, void* data)
 {
-  m_Layout = layout;
+  return new OpenGLVertexBuffer(size, data);
 }
 
 }

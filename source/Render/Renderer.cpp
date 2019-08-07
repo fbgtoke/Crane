@@ -21,10 +21,12 @@
 
 namespace Crane {
 
-void Renderer::render(const VertexArray& vao, const ShaderProgram& program)
+void Renderer::render(
+  const VertexArray * const vao, const ShaderProgram * const program
+)
 {
-  program.use();
-  vao.bind();
+  program->use();
+  vao->bind();
 
   /* Placeholder */
   glDrawArrays(
@@ -35,20 +37,21 @@ void Renderer::render(const VertexArray& vao, const ShaderProgram& program)
 }
 
 void Renderer::renderIndexed(
-  const VertexArray& vao, const ShaderProgram& program,
+  const VertexArray * const vao, const ShaderProgram * const program,
   const Texture& texture
 )
 {
-  program.use();
+  program->use();
 
-  vao.bind();
+  vao->bind();
 
   texture.bind();
-  program.setUniform1i("tex", texture.getTextureUnit());
+  /* To do: replace hardcoded "tex" */
+  program->setUniform1i("tex", texture.getTextureUnit());
 
   CRANE_GL_CALL(glDrawElements(
     GL_TRIANGLES,
-    vao.getIndexBuffer()->getCount(),
+    vao->getIndexBuffer()->getCount(),
     GL_UNSIGNED_INT,
     nullptr
   ));

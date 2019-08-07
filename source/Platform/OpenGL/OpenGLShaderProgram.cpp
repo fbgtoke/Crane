@@ -14,7 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "ShaderProgram.hpp"
+#include "OpenGLShaderProgram.hpp"
+#include "OpenGLShader.hpp"
 #include "Core/Log.hpp"
 
 #include <glad/glad.h>
@@ -23,10 +24,12 @@
 
 namespace Crane {
 
-ShaderProgram::ShaderProgram()
-  : m_Id(GL_INVALID_VALUE), m_Linked(false) {}
+OpenGLShaderProgram::OpenGLShaderProgram()
+{
+  m_Id = CRANE_GL_CALL(glCreateProgram());
+}
 
-ShaderProgram::~ShaderProgram()
+OpenGLShaderProgram::~OpenGLShaderProgram()
 {
   if (m_Id != GL_INVALID_VALUE)
   {
@@ -34,28 +37,29 @@ ShaderProgram::~ShaderProgram()
   }
 }
 
-void ShaderProgram::create()
-{
-  m_Id = CRANE_GL_CALL(glCreateProgram());
-}
-
-void ShaderProgram::destroy()
+void OpenGLShaderProgram::destroy()
 {
   CRANE_GL_CALL(glDeleteProgram(m_Id));
   m_Id = GL_INVALID_VALUE;
 }
 
-void ShaderProgram::attach(const Shader& shader) const
+void OpenGLShaderProgram::attach(const Shader * const shader) const
 {
-  CRANE_GL_CALL(glAttachShader(m_Id, shader.getId()));
+  const OpenGLShader * const ogl_shader =
+    dynamic_cast<const OpenGLShader * const >(shader);
+
+  CRANE_GL_CALL(glAttachShader(m_Id, ogl_shader->getId()));
 }
 
-void ShaderProgram::detach(const Shader& shader) const
+void OpenGLShaderProgram::detach(const Shader * const shader) const
 {
-  CRANE_GL_CALL(glDetachShader(m_Id, shader.getId()));
+  const OpenGLShader * const ogl_shader =
+    dynamic_cast<const OpenGLShader * const >(shader);
+
+  CRANE_GL_CALL(glDetachShader(m_Id, ogl_shader->getId()));
 }
 
-bool ShaderProgram::link()
+bool OpenGLShaderProgram::link()
 {
   assert(m_Id != GL_INVALID_VALUE);
 
@@ -64,16 +68,17 @@ bool ShaderProgram::link()
   int linked = 0;
   CRANE_GL_CALL(glGetProgramiv(m_Id, GL_LINK_STATUS, &linked));
 
-  m_Linked = (linked != 0);
-  if (!m_Linked)
+  if (!linked)
   {
     int max_length;
     CRANE_GL_CALL(glGetProgramiv(m_Id, GL_INFO_LOG_LENGTH, &max_length));
 
-    m_InfoLog = std::string(max_length, '\0');
+    std::string log = std::string(max_length, '\0');
     CRANE_GL_CALL(
-      glGetProgramInfoLog(m_Id, max_length, &max_length, &m_InfoLog[0])
+      glGetProgramInfoLog(m_Id, max_length, &max_length, &log[0])
     );
+
+    CRANE_LOG_WARN(log);
 
     return false;
   }
@@ -83,12 +88,12 @@ bool ShaderProgram::link()
   return true;
 }
 
-void ShaderProgram::use() const
+void OpenGLShaderProgram::use() const
 {
   CRANE_GL_CALL(glUseProgram(m_Id));
 }
 
-unsigned int ShaderProgram::getUniformLocation(const std::string& name) const
+unsigned int OpenGLShaderProgram::getUniformLocation(const std::string& name) const
 {
   unsigned int location =
     CRANE_GL_CALL(glGetUniformLocation(m_Id, name.c_str()));
@@ -96,102 +101,64 @@ unsigned int ShaderProgram::getUniformLocation(const std::string& name) const
   return location;
 }
 
-/*
-void ShaderProgram::setUniform1i(unsigned int location,
-  int v
-) const
-{
-  CRANE_GL_CALL(glUniform1i(location, v));
-}
-
-void ShaderProgram::setUniform1f(unsigned int location,
-float v
-) const
-{
-  CRANE_GL_CALL(glUniform1f(location, v));
-}
-
-void ShaderProgram::setUniform2f(unsigned int location, 
-  float v1, float v2
-) const
-{
-  CRANE_GL_CALL(glUniform2f(location, v1, v2));
-}
-
-void ShaderProgram::setUniform3f(unsigned int location, 
-  float v1, float v2, float v3
-) const
-{
-  CRANE_GL_CALL(glUniform3f(location, v1, v2, v3));
-}
-
-void ShaderProgram::setUniformMat3f(unsigned int location,
-  const float* v
-) const
-{
-  CRANE_GL_CALL(glUniformMatrix3fv(location, 1, GL_FALSE, v));
-}
-
-void ShaderProgram::setUniformMat4f(unsigned int location,
-  const float* v
-) const
-{
-  CRANE_GL_CALL(glUniformMatrix4fv(location, 1, GL_FALSE, v));
-}
-*/
-
-void ShaderProgram::setUniform1i(const std::string name,
+void OpenGLShaderProgram::setUniform1i(const std::string name,
   int v
 ) const
 {
   assert(m_Uniforms.contains(name));
-  const Uniform& pos = m_Uniforms.at(name);
-  CRANE_GL_CALL(glUniform1i(pos.location, v));
+  const Uniform& uniform = m_Uniforms.at(name);
+  assert(uniform.type == ShaderDatatype::Int);
+  CRANE_GL_CALL(glUniform1i(uniform.location, v));
 }
 
-void ShaderProgram::setUniform1f(const std::string name,
+void OpenGLShaderProgram::setUniform1f(const std::string name,
 float v
 ) const
 {
   assert(m_Uniforms.contains(name));
-  const Uniform& pos = m_Uniforms.at(name);
-  CRANE_GL_CALL(glUniform1f(pos.location, v));
+  const Uniform& uniform = m_Uniforms.at(name);
+  assert(uniform.type == ShaderDatatype::Float);
+  CRANE_GL_CALL(glUniform1f(uniform.location, v));
 }
 
-void ShaderProgram::setUniform2f(const std::string name, 
+void OpenGLShaderProgram::setUniform2f(const std::string name, 
   float v1, float v2
 ) const
 {
   assert(m_Uniforms.contains(name));
-  const Uniform& pos = m_Uniforms.at(name);
-  CRANE_GL_CALL(glUniform2f(pos.location, v1, v2));
+  const Uniform& uniform = m_Uniforms.at(name);
+  assert(uniform.type == ShaderDatatype::Float2);
+  CRANE_GL_CALL(glUniform2f(uniform.location, v1, v2));
 }
 
-void ShaderProgram::setUniform3f(const std::string name, 
+void OpenGLShaderProgram::setUniform3f(const std::string name, 
   float v1, float v2, float v3
 ) const
 {
   assert(m_Uniforms.contains(name));
-  const Uniform& pos = m_Uniforms.at(name);
-  CRANE_GL_CALL(glUniform3f(pos.location, v1, v2, v3));
+  const Uniform& uniform = m_Uniforms.at(name);
+  assert(uniform.type == ShaderDatatype::Float3);
+  CRANE_GL_CALL(glUniform3f(uniform.location, v1, v2, v3));
 }
 
-void ShaderProgram::setUniformMat3f(const std::string name,
+void OpenGLShaderProgram::setUniformMat3f(const std::string name,
   const float* v
 ) const
 {
   assert(m_Uniforms.contains(name));
-  const Uniform& pos = m_Uniforms.at(name);
-  CRANE_GL_CALL(glUniformMatrix3fv(pos.location, 1, GL_FALSE, v));
+  const Uniform& uniform = m_Uniforms.at(name);
+  assert(uniform.type == ShaderDatatype::Mat3);
+  CRANE_GL_CALL(glUniformMatrix3fv(uniform.location, 1, GL_FALSE, v));
 }
 
-void ShaderProgram::setUniformMat4f(const std::string name,
+void OpenGLShaderProgram::setUniformMat4f(const std::string name,
   const float* v
 ) const
 {
   assert(m_Uniforms.contains(name));
-  const Uniform& pos = m_Uniforms.at(name);
-  CRANE_GL_CALL(glUniformMatrix4fv(pos.location, 1, GL_FALSE, v));
+  const Uniform& uniform = m_Uniforms.at(name);
+  assert(uniform.type == ShaderDatatype::Mat4);
+  CRANE_GL_CALL(glUniformMatrix4fv(uniform.location, 1, GL_FALSE, v));
 }
 
 ShaderDatatype toCrane(unsigned int type)
@@ -215,7 +182,7 @@ ShaderDatatype toCrane(unsigned int type)
   return ShaderDatatype::Int;
 }
 
-void ShaderProgram::queryUniforms()
+void OpenGLShaderProgram::queryUniforms()
 {
   m_Uniforms.clear();
 
@@ -238,6 +205,14 @@ void ShaderProgram::queryUniforms()
     ShaderDatatype crane_type = toCrane(type);
     m_Uniforms[name] = Uniform(i, crane_type);
   }
+}
+
+/******************************************************************************/
+/* Implementation of static methods from ShaderProgram class                  */
+/******************************************************************************/
+ShaderProgram* ShaderProgram::create()
+{
+  return new OpenGLShaderProgram();
 }
 
 }

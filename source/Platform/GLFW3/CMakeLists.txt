@@ -5,7 +5,7 @@ target_sources(crane PUBLIC
 )
 
 target_include_directories(crane PRIVATE
-  $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/Platform/Linux>
+  $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/Platform/GLFW3>
   $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/>
   $<INSTALL_INTERFACE:include>
 )

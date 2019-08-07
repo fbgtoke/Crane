@@ -1,5 +1,6 @@
 if (${CRANE_PLATFORM_LINUX})
-  add_subdirectory(Linux)
+  add_subdirectory(GLFW3)
+  add_subdirectory(OpenGL)
 else()
   message(FATAL_ERROR "Unsupported platform")
 endif()

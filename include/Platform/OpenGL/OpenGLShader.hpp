@@ -16,39 +16,26 @@
 
 #pragma once
 
-#include "IndexBuffer.hpp"
-#include "VertexBuffer.hpp"
-
-#include <vector>
+#include "Render/Shader.hpp"
 
 namespace Crane {
 
-class VertexArray {
+class OpenGLShader : public Shader {
 public:
-  VertexArray()
-    : m_IndexBuffer(nullptr) {}
-  virtual ~VertexArray() = default;
+  OpenGLShader(ShaderType t, const std::string& src);
+  virtual ~OpenGLShader() override;
+  void destroy() override;
 
-  static VertexArray* create();
-  virtual void destroy() = 0;
+  inline ShaderType getType() const { return m_Type; }
+  inline unsigned int getId() const { return m_Id; }
+  inline bool isCompiled() const { return m_Compiled; }
 
-  virtual void bind() const = 0;
-  virtual void unbind() const = 0;
+private:
+  ShaderType m_Type;
+  int m_Id;
 
-  virtual void addVertexBuffer(const VertexBuffer* buffer) = 0;
-
-  inline const std::vector<const VertexBuffer*>& getVertexBuffers() const
-  {
-    return m_VertexBuffers;
-  }
-
-  virtual void setIndexBuffer(const IndexBuffer* buffer) = 0;
-  inline const IndexBuffer* getIndexBuffer() const { return m_IndexBuffer; }
-
-
-protected:
-  std::vector<const VertexBuffer*> m_VertexBuffers;
-  const IndexBuffer* m_IndexBuffer;
+  bool m_Compiled;
+  bool compileFromSource(const std::string& src);
 };
 
 }

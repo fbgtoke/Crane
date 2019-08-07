@@ -14,17 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "VertexArray.hpp"
+#include "OpenGLVertexArray.hpp"
 #include "Core/Log.hpp"
 
 #include <glad/glad.h>
 
 namespace Crane {
 
-VertexArray::VertexArray()
-  : m_Id(GL_INVALID_VALUE) {}
+OpenGLVertexArray::OpenGLVertexArray()
+{
+  CRANE_GL_CALL(glGenVertexArrays(1, &m_Id));
+}
 
-VertexArray::~VertexArray()
+OpenGLVertexArray::~OpenGLVertexArray()
 {
   if (m_Id != GL_INVALID_VALUE)
   {
@@ -32,28 +34,23 @@ VertexArray::~VertexArray()
   }
 }
 
-void VertexArray::create()
-{
-  CRANE_GL_CALL(glGenVertexArrays(1, &m_Id));
-}
-
-void VertexArray::destroy()
+void OpenGLVertexArray::destroy()
 {
   CRANE_GL_CALL(glDeleteVertexArrays(1, &m_Id));
   m_Id = GL_INVALID_VALUE;
 }
 
-void VertexArray::bind() const
+void OpenGLVertexArray::bind() const
 {
   CRANE_GL_CALL(glBindVertexArray(m_Id));
 }
 
-void VertexArray::unbind() const
+void OpenGLVertexArray::unbind() const
 {
   CRANE_GL_CALL(glBindVertexArray(0));
 }
 
-void VertexArray::addVertexBuffer(const VertexBuffer* buffer)
+void OpenGLVertexArray::addVertexBuffer(const VertexBuffer* buffer)
 {
   CRANE_GL_CALL(glBindVertexArray(m_Id));
   buffer->bind();
@@ -65,7 +62,7 @@ void VertexArray::addVertexBuffer(const VertexBuffer* buffer)
     CRANE_GL_CALL(glEnableVertexAttribArray(index));
     CRANE_GL_CALL(glVertexAttribPointer(index,
       e.getCount(),
-      BufferLayout::CraneDatatypeToOpenglDatatype(e.type),
+      BufferLayout::toNativeDatatype(e.type),
       e.normalized ? GL_TRUE : GL_FALSE,
       layout.getStride(),
       (const void*)e.offset
@@ -76,12 +73,20 @@ void VertexArray::addVertexBuffer(const VertexBuffer* buffer)
   m_VertexBuffers.push_back(buffer);
 }
 
-void VertexArray::setIndexBuffer(const IndexBuffer* buffer)
+void OpenGLVertexArray::setIndexBuffer(const IndexBuffer* buffer)
 {
   CRANE_GL_CALL(glBindVertexArray(m_Id));
   buffer->bind();
   
   m_IndexBuffer = buffer;
+}
+
+/******************************************************************************/
+/* Implementation of static methods from VertexArray class                    */
+/******************************************************************************/
+VertexArray* VertexArray::create()
+{
+  return new OpenGLVertexArray();
 }
 
 }

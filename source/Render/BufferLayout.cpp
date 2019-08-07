@@ -16,8 +16,6 @@
 
 #include "BufferLayout.hpp"
 
-#include <glad/glad.h>
-
 namespace Crane {
 
 BufferLayoutElement::BufferLayoutElement(
@@ -44,24 +42,6 @@ void BufferLayout::computeOffsets()
   {
     e.offset = m_Stride;
     m_Stride += e.size;
-  }
-}
-
-unsigned int BufferLayout::CraneDatatypeToOpenglDatatype(ShaderDatatype t)
-{
-  switch (t)
-  {
-    case ShaderDatatype::Int:    return GL_INT;
-    case ShaderDatatype::Int2:   return GL_INT;
-    case ShaderDatatype::Int3:   return GL_INT;
-    case ShaderDatatype::Int4:   return GL_INT;
-    case ShaderDatatype::Float:  return GL_FLOAT;
-    case ShaderDatatype::Float2: return GL_FLOAT;
-    case ShaderDatatype::Float3: return GL_FLOAT;
-    case ShaderDatatype::Float4: return GL_FLOAT;
-    case ShaderDatatype::Mat3:   return GL_FLOAT;
-    case ShaderDatatype::Mat4:   return GL_FLOAT;
-    default: return GL_INVALID_VALUE;
   }
 }
 

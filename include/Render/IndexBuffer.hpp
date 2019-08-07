@@ -22,20 +22,19 @@ namespace Crane {
 
 class IndexBuffer {
 public:
-  IndexBuffer();
-  ~IndexBuffer();
+  IndexBuffer()
+    : m_Count(0) {}
+  virtual ~IndexBuffer() = default;
 
-  void create(std::size_t size, unsigned int* data);
-  void destroy();
+  static IndexBuffer* create(std::size_t size, unsigned int* data);
+  virtual void destroy() = 0;
 
-  void bind() const;
-  void unbind() const;
+  virtual void bind() const = 0;
+  virtual void unbind() const = 0;
 
-  inline unsigned int getId() const { return m_Id; }
   inline std::size_t getCount() const { return m_Count; }
 
-private:
-  unsigned int m_Id;
+protected:
   std::size_t m_Count;
 };
 

@@ -88,7 +88,7 @@ public:
 
   inline unsigned int getStride() const { return m_Stride; }
 
-  static unsigned int CraneDatatypeToOpenglDatatype(ShaderDatatype t);
+  static unsigned int toNativeDatatype(ShaderDatatype t);
 
 private:
   std::vector<BufferLayoutElement> m_LayoutElements;

@@ -25,56 +25,25 @@ namespace Crane {
   
 class ShaderProgram {
 public:
-  ShaderProgram();
-  ~ShaderProgram();
+  ShaderProgram() = default;
+  virtual ~ShaderProgram() = default;
 
-  void create();
-  void destroy();
+  static ShaderProgram* create();
+  virtual void destroy() = 0;
 
-  void attach(const Shader& shader) const;
-  void detach(const Shader& shader) const;
+  virtual void attach(const Shader * const shader) const = 0;
+  virtual void detach(const Shader * const shader) const = 0;
 
-  bool link();
+  virtual bool link() = 0;
 
-  void use() const;
+  virtual void use() const = 0;
 
-  unsigned int getUniformLocation(const std::string& name) const;
-
-  //void setUniform1i(unsigned int location, int v) const;
-  //void setUniform1f(unsigned int location, float v) const;
-  //void setUniform2f(unsigned int location, float v1, float v2) const;
-  //void setUniform3f(unsigned int location, float v1, float v2, float v3) const;
-  //void setUniformMat3f(unsigned int location, const float* v) const;
-  //void setUniformMat4f(unsigned int location, const float* v) const;
-
-  void setUniform1i(const std::string name, int v) const;
-  void setUniform1f(const std::string name, float v) const;
-  void setUniform2f(const std::string name, float v1, float v2) const;
-  void setUniform3f(const std::string name, float v1, float v2, float v3) const;
-  void setUniformMat3f(const std::string name, const float* v) const;
-  void setUniformMat4f(const std::string name, const float* v) const;
-
-  inline unsigned int getId() const { return m_Id; }
-  inline bool isLinked() const { return m_Linked; }
-
-  inline std::string getInfoLog() const { return m_InfoLog; }
-
-private:
-  unsigned int m_Id;
-
-  bool m_Linked;
-  std::string m_InfoLog;
-
-  void queryUniforms();
-
-  struct Uniform {
-    unsigned int location;
-    ShaderDatatype type;
-    Uniform() {};
-    Uniform(unsigned int l, ShaderDatatype t)
-      : location(l), type(t) {};
-  };
-  std::unordered_map<std::string, Uniform> m_Uniforms;
+  virtual void setUniform1i(const std::string name, int v) const = 0;
+  virtual void setUniform1f(const std::string name, float v) const = 0;
+  virtual void setUniform2f(const std::string name, float v1, float v2) const = 0;
+  virtual void setUniform3f(const std::string name, float v1, float v2, float v3) const = 0;
+  virtual void setUniformMat3f(const std::string name, const float* v) const = 0;
+  virtual void setUniformMat4f(const std::string name, const float* v) const = 0;
 };
 
 }

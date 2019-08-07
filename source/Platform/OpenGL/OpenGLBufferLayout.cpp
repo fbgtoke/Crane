@@ -14,41 +14,28 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
+#include "BufferLayout.hpp"
 
-#include "IndexBuffer.hpp"
-#include "VertexBuffer.hpp"
-
-#include <vector>
+#include <glad/glad.h>
 
 namespace Crane {
 
-class VertexArray {
-public:
-  VertexArray()
-    : m_IndexBuffer(nullptr) {}
-  virtual ~VertexArray() = default;
-
-  static VertexArray* create();
-  virtual void destroy() = 0;
-
-  virtual void bind() const = 0;
-  virtual void unbind() const = 0;
-
-  virtual void addVertexBuffer(const VertexBuffer* buffer) = 0;
-
-  inline const std::vector<const VertexBuffer*>& getVertexBuffers() const
+unsigned int BufferLayout::toNativeDatatype(ShaderDatatype t)
+{
+  switch (t)
   {
-    return m_VertexBuffers;
+    case ShaderDatatype::Int:    return GL_INT;
+    case ShaderDatatype::Int2:   return GL_INT;
+    case ShaderDatatype::Int3:   return GL_INT;
+    case ShaderDatatype::Int4:   return GL_INT;
+    case ShaderDatatype::Float:  return GL_FLOAT;
+    case ShaderDatatype::Float2: return GL_FLOAT;
+    case ShaderDatatype::Float3: return GL_FLOAT;
+    case ShaderDatatype::Float4: return GL_FLOAT;
+    case ShaderDatatype::Mat3:   return GL_FLOAT;
+    case ShaderDatatype::Mat4:   return GL_FLOAT;
+    default: return GL_INVALID_VALUE;
   }
-
-  virtual void setIndexBuffer(const IndexBuffer* buffer) = 0;
-  inline const IndexBuffer* getIndexBuffer() const { return m_IndexBuffer; }
-
-
-protected:
-  std::vector<const VertexBuffer*> m_VertexBuffers;
-  const IndexBuffer* m_IndexBuffer;
-};
+}
 
 }

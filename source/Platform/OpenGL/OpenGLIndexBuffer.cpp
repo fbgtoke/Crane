@@ -14,25 +14,14 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "IndexBuffer.hpp"
+#include "OpenGLIndexBuffer.hpp"
 #include "Core/Log.hpp"
 
 #include <glad/glad.h>
 
 namespace Crane {
 
-IndexBuffer::IndexBuffer()
-  : m_Id(GL_INVALID_VALUE), m_Count(0) {}
-
-IndexBuffer::~IndexBuffer()
-{
-  if (m_Id != GL_INVALID_VALUE)
-  {
-    destroy();
-  }
-}
-
-void IndexBuffer::create(std::size_t size, unsigned int* data)
+OpenGLIndexBuffer::OpenGLIndexBuffer(std::size_t size, unsigned int* data)
 {
   CRANE_GL_CALL(glGenBuffers(1, &m_Id));
   CRANE_GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Id));
@@ -44,20 +33,36 @@ void IndexBuffer::create(std::size_t size, unsigned int* data)
   m_Count = size / sizeof(unsigned int);
 }
 
-void IndexBuffer::destroy()
+OpenGLIndexBuffer::~OpenGLIndexBuffer()
+{
+  if (m_Id != GL_INVALID_VALUE)
+  {
+    destroy();
+  }
+}
+
+void OpenGLIndexBuffer::destroy()
 {
   CRANE_GL_CALL(glDeleteBuffers(1, &m_Id));
   m_Id = GL_INVALID_VALUE;
 }
 
-void IndexBuffer::bind() const
+void OpenGLIndexBuffer::bind() const
 {
   CRANE_GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Id));
 }
 
-void IndexBuffer::unbind() const
+void OpenGLIndexBuffer::unbind() const
 {
   CRANE_GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0));
+}
+
+/******************************************************************************/
+/* Implementation of static methods from IndexBuffer class                    */
+/******************************************************************************/
+IndexBuffer* IndexBuffer::create(std::size_t size, unsigned int* data)
+{
+  return new OpenGLIndexBuffer(size, data);
 }
 
 }

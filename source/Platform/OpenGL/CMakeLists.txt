@@ -1,14 +1,14 @@
 target_sources(crane PUBLIC
-  Font.cpp
-  OrthographicCamera.cpp
-  Renderer.cpp
-  Texture.cpp
-  Transform.cpp
-  BufferLayout.cpp
+  OpenGLBufferLayout.cpp
+  OpenGLIndexBuffer.cpp
+  OpenGLShader.cpp
+  OpenGLShaderProgram.cpp
+  OpenGLVertexArray.cpp
+  OpenGLVertexBuffer.cpp
 )
 
 target_include_directories(crane PRIVATE
-  $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/Render>
+  $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/Platform/OpenGL>
   $<INSTALL_INTERFACE:include>
   ${GLAD_INCLUDE_DIRS}
   ${GLM_INCLUDE_DIRS}

@@ -33,27 +33,12 @@ public:
     Unknown, Vertex, Fragment
   } ShaderType;
 
-  Shader();
-  ~Shader();
-
-  void create(ShaderType t);
-  void destroy();
-
-  bool compileFromFile(const std::string& file);
-  bool compileFromSource(const std::string& src);
-
-  inline ShaderType getType() const { return m_Type; }
-  inline unsigned int getId() const { return m_Id; }
-
-  inline bool isCompiled() const { return m_Compiled; }
-
+  Shader() = default;
+  virtual ~Shader() = default;
+  virtual void destroy() = 0;
+  
+  static Shader* create(ShaderType t, const std::string& src);
   static std::size_t getDatatypeSize(ShaderDatatype t);
-
-private:
-  ShaderType m_Type;
-  int m_Id;
-
-  bool m_Compiled;
 };
 
 }

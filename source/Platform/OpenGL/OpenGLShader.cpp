@@ -14,7 +14,8 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "Shader.hpp"
+#include "OpenGLShader.hpp"
+#include "Render/Shader.hpp"
 
 #include "Core/Log.hpp"
 
@@ -26,21 +27,10 @@
 
 namespace Crane {
 
-Shader::Shader()
-  : m_Type(ShaderType::Unknown), m_Id(GL_INVALID_VALUE), m_Compiled(false) {}
-
-Shader::~Shader()
+OpenGLShader::OpenGLShader(ShaderType t, const std::string& src)
+  : m_Type(t), m_Id(GL_INVALID_VALUE), m_Compiled(false)
 {
-  if (m_Id != GL_INVALID_VALUE)
-  {
-    destroy();
-  }
-}
-
-void Shader::create(ShaderType t)
-{
-  m_Type = t;
-
+  /* Create OpenGL shader */
   switch (m_Type)
   {
   case ShaderType::Vertex:
@@ -51,37 +41,27 @@ void Shader::create(ShaderType t)
     break;
   default:
     CRANE_LOG_FATAL("Unrecognized shader type");
+  }
 
+  /* Compile from source */
+  compileFromSource(src);
+}
+
+OpenGLShader::~OpenGLShader()
+{
+  if (m_Id != GL_INVALID_VALUE)
+  {
+    destroy();
   }
 }
 
-void Shader::destroy()
+void OpenGLShader::destroy()
 {
   CRANE_GL_CALL(glDeleteShader(m_Id));
   m_Id = GL_INVALID_VALUE;
 }
 
-bool Shader::compileFromFile(const std::string& file)
-{
-  assert(m_Id != GL_INVALID_VALUE);
-
-  std::ifstream fstream(file);
-
-  if (!fstream.is_open())
-  {
-    CRANE_LOG_WARN("Could not open shader file {0}", file);
-    return false;
-  }
-
-  std::string src;
-  src.assign(
-    std::istreambuf_iterator<char>(fstream),
-    std::istreambuf_iterator<char>()
-  );
-  return compileFromSource(src);
-}
-
-bool Shader::compileFromSource(const std::string& src)
+bool OpenGLShader::compileFromSource(const std::string& src)
 {
   assert(m_Id != GL_INVALID_VALUE);
 
@@ -109,6 +89,15 @@ bool Shader::compileFromSource(const std::string& src)
   }
 
   return true;
+}
+
+/******************************************************************************/
+/* Implementation of static methods from Shader class                         */
+/******************************************************************************/
+
+Shader* Shader::create(Shader::ShaderType t, const std::string& src)
+{
+  return new OpenGLShader(t, src);
 }
 
 std::size_t Shader::getDatatypeSize(ShaderDatatype t)

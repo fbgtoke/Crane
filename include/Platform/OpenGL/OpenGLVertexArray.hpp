@@ -16,39 +16,27 @@
 
 #pragma once
 
-#include "IndexBuffer.hpp"
-#include "VertexBuffer.hpp"
-
-#include <vector>
+#include "Render/VertexArray.hpp"
 
 namespace Crane {
 
-class VertexArray {
+class OpenGLVertexArray : public VertexArray {
 public:
-  VertexArray()
-    : m_IndexBuffer(nullptr) {}
-  virtual ~VertexArray() = default;
+  OpenGLVertexArray();
+  virtual ~OpenGLVertexArray() override;
 
-  static VertexArray* create();
-  virtual void destroy() = 0;
+  void destroy() override;
 
-  virtual void bind() const = 0;
-  virtual void unbind() const = 0;
+  void bind() const override;
+  void unbind() const override;
 
-  virtual void addVertexBuffer(const VertexBuffer* buffer) = 0;
+  void addVertexBuffer(const VertexBuffer* buffer) override;
+  void setIndexBuffer(const IndexBuffer* buffer) override;
 
-  inline const std::vector<const VertexBuffer*>& getVertexBuffers() const
-  {
-    return m_VertexBuffers;
-  }
+  inline unsigned int getId() const { return m_Id; }
 
-  virtual void setIndexBuffer(const IndexBuffer* buffer) = 0;
-  inline const IndexBuffer* getIndexBuffer() const { return m_IndexBuffer; }
-
-
-protected:
-  std::vector<const VertexBuffer*> m_VertexBuffers;
-  const IndexBuffer* m_IndexBuffer;
+private:
+  unsigned int m_Id;
 };
 
 }

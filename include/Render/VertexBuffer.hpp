@@ -24,22 +24,22 @@ namespace Crane {
 
 class VertexBuffer {
 public:
-  VertexBuffer();
-  ~VertexBuffer();
+  VertexBuffer() = default;
+  virtual ~VertexBuffer() = default;
 
-  void create(std::size_t size, void* data);
-  void destroy();
+  static VertexBuffer* create(std::size_t size, void* data);
+  virtual void destroy() = 0;
 
-  void bind() const;
-  void unbind() const;
+  virtual void bind() const = 0;
+  virtual void unbind() const = 0;
 
-  void setLayout(const BufferLayout& layout);
-
-  inline unsigned int getId() const { return m_Id; }
+  inline void setLayout(const BufferLayout& layout)
+  {
+    m_Layout = layout;
+  }
   inline const BufferLayout& getLayout() const { return m_Layout; }
 
-private:
-  unsigned int m_Id;
+protected:
   BufferLayout m_Layout;
 };
 
