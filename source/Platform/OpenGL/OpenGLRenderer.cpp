@@ -15,11 +15,21 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Render/Renderer.hpp"
-#include "Core/Log.hpp"
+#include "OpenGLLog.hpp"
 
 #include <glad/glad.h>
 
 namespace Crane {
+
+void Renderer::clear()
+{
+  CRANE_GL_CALL(glClearColor(1.f, 0.f, 1.f, 1.f));
+  CRANE_GL_CALL(glEnable(GL_BLEND));
+  CRANE_GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+
+  CRANE_GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
+  CRANE_GL_CALL(glClear(GL_DEPTH_BUFFER_BIT));
+}
 
 void Renderer::render(
   const VertexArray * const vao, const ShaderProgram * const program

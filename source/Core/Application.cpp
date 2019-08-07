@@ -16,11 +16,9 @@
 
 #include "Application.hpp"
 #include "Log.hpp"
+#include "Render/Renderer.hpp"
 
 #include <cassert>
-
-/* Placeholder */
-#include <GL/gl.h>
 
 namespace Crane {
 
@@ -92,12 +90,7 @@ void Application::onUpdate()
 
 void Application::onRender()
 {
-  CRANE_GL_CALL(glClearColor(1.f, 0.f, 1.f, 1.f));
-  CRANE_GL_CALL(glEnable(GL_BLEND));
-  CRANE_GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
-
-  CRANE_GL_CALL(glClear(GL_COLOR_BUFFER_BIT));
-  CRANE_GL_CALL(glClear(GL_DEPTH_BUFFER_BIT));
+  Renderer::clear();
 
   for (auto it = m_LayerStack.rbegin(); it != m_LayerStack.rend(); ++it)
   {

@@ -15,7 +15,7 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "OpenGLVertexArray.hpp"
-#include "Core/Log.hpp"
+#include "OpenGLLog.hpp"
 
 #include <glad/glad.h>
 

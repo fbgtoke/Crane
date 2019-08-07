@@ -24,6 +24,8 @@ namespace Crane {
 
 class Renderer {
 public:
+  static void clear();
+
   static void render(
     const VertexArray * const vao, const ShaderProgram * const program
   );

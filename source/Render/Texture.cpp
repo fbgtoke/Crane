@@ -15,9 +15,9 @@
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 #include "Texture.hpp"
+#include "Platform/OpenGL/OpenGLLog.hpp"
 
 #include <glad/glad.h>
-#include "Core/Log.hpp"
 
 namespace Crane {
 

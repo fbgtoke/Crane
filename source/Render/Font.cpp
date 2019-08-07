@@ -15,6 +15,7 @@
 
 #include "Font.hpp"
 #include "Core/Log.hpp"
+#include "Platform/OpenGL/OpenGLLog.hpp"
 
 #include <glad/glad.h>
 #include <GL/gl.h>

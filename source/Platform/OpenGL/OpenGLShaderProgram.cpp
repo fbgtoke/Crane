@@ -16,7 +16,7 @@
 
 #include "OpenGLShaderProgram.hpp"
 #include "OpenGLShader.hpp"
-#include "Core/Log.hpp"
+#include "OpenGLLog.hpp"
 
 #include <glad/glad.h>
 
