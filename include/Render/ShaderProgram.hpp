@@ -17,6 +17,7 @@
 #pragma once
 
 #include "Shader.hpp"
+#include "Texture.hpp"
 
 #include <string>
 #include <unordered_map>
@@ -38,12 +39,13 @@ public:
 
   virtual void use() const = 0;
 
-  virtual void setUniform1i(const std::string name, int v) const = 0;
-  virtual void setUniform1f(const std::string name, float v) const = 0;
-  virtual void setUniform2f(const std::string name, float v1, float v2) const = 0;
-  virtual void setUniform3f(const std::string name, float v1, float v2, float v3) const = 0;
-  virtual void setUniformMat3f(const std::string name, const float* v) const = 0;
-  virtual void setUniformMat4f(const std::string name, const float* v) const = 0;
+  virtual void setUniform1i(const std::string& name, int v) const = 0;
+  virtual void setUniform1f(const std::string& name, float v) const = 0;
+  virtual void setUniform2f(const std::string& name, float v1, float v2) const = 0;
+  virtual void setUniform3f(const std::string& name, float v1, float v2, float v3) const = 0;
+  virtual void setUniformMat3f(const std::string& name, const float* v) const = 0;
+  virtual void setUniformMat4f(const std::string& name, const float* v) const = 0;
+  virtual void setUniformTexture(const std::string& name, const Texture * const tex) const = 0;
 };
 
 }

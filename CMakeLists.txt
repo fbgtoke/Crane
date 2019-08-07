@@ -31,7 +31,6 @@ if (CRANE_PLATFORM_LINUX)
 endif()
 
 if (CRANE_DEBUG)
-  add_subdirectory(ThirdParty/spdlog)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DDEBUG")
 endif()
 

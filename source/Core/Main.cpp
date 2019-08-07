@@ -19,8 +19,7 @@
 #include "Logo.hpp"
 
 int main(int argc, char* argv[]) {
-  Crane::Log::init();
-  CRANE_LOG_INFO("{0}", Crane::CraneLogo);
+  CRANE_LOG_INFO(Crane::CraneLogo);
 
   Crane::Application::get()->run();
 

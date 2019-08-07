@@ -57,7 +57,7 @@ void Renderer::renderIndexed(
 
   texture.bind();
   /* To do: replace hardcoded "tex" */
-  program->setUniform1i("tex", texture.getTextureUnit());
+  program->setUniformTexture("tex", &texture);
 
   CRANE_GL_CALL(glDrawElements(
     GL_TRIANGLES,

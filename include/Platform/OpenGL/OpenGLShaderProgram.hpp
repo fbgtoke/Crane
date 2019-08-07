@@ -39,12 +39,13 @@ public:
 
   unsigned int getUniformLocation(const std::string& name) const;
 
-  void setUniform1i(const std::string name, int v) const override;
-  void setUniform1f(const std::string name, float v) const override;
-  void setUniform2f(const std::string name, float v1, float v2) const override;
-  void setUniform3f(const std::string name, float v1, float v2, float v3) const override;
-  void setUniformMat3f(const std::string name, const float* v) const override;
-  void setUniformMat4f(const std::string name, const float* v) const override;
+  void setUniform1i(const std::string& name, int v) const override;
+  void setUniform1f(const std::string& name, float v) const override;
+  void setUniform2f(const std::string& name, float v1, float v2) const override;
+  void setUniform3f(const std::string& name, float v1, float v2, float v3) const override;
+  void setUniformMat3f(const std::string& name, const float* v) const override;
+  void setUniformMat4f(const std::string& name, const float* v) const override;
+  void setUniformTexture(const std::string& name, const Texture * const tex) const override;
 
   inline unsigned int getId() const { return m_Id; }
 
