@@ -14,8 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
-
 #include "MatrixTransform.hpp"
 
 namespace Crane { namespace Math {
@@ -74,6 +72,24 @@ Mat4 MatrixTransform::scale(const Vec3& v)
   m[0][0] = v.x;
   m[1][1] = v.y;
   m[2][2] = v.z;
+  return m;
+}
+
+Mat4 MatrixTransform::ortho(
+  float l, float r, float b, float t,
+  float znear, float zfar
+)
+{
+  Mat4 m;
+  m[0][0] =  2.f / (r - l);
+  m[1][1] =  2.f / (t - b);
+  m[2][2] = -2.f / (zfar - znear);
+
+  m[3][0] = - (r + l) / (r - l);
+  m[3][1] = - (t + b) / (t - b);
+  m[3][2] = - (zfar + znear) / (zfar - znear);
+  m[3][3] =  1.f;
+
   return m;
 }
 

@@ -14,8 +14,6 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
-
 #include "Mat4.hpp"
 
 #include <cstring>
@@ -220,7 +218,11 @@ Vec4 operator*(const Mat4& m, const Vec4& v)
 
 Mat4& Mat4::operator=(const Mat4& v)
 {
-  memcpy(values, v.values, 16 * sizeof(float));
+  if (this != &v)
+  {
+    memcpy(values, v.values, 16 * sizeof(float));
+  }
+  return *this;
 }
 
 Mat4& Mat4::operator+=(const Mat4& v)

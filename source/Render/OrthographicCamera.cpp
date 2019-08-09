@@ -24,8 +24,7 @@ OrthographicCamera::OrthographicCamera(
   float l, float r, float b, float t, 
   float znear, float zfar
 ) : m_Position(0.f), m_Rotation(0.f),
-  //m_ProjectionMatrix(glm::ortho(l, r, b, t, znear, zfar))
-  m_ProjectionMatrix(1.f)
+  m_ProjectionMatrix(Math::MatrixTransform::ortho(l, r, b, t, znear, zfar))
 {
   recomputeMatrices();
 }

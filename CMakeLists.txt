@@ -4,7 +4,7 @@ cmake_policy(SET CMP0015 NEW)
 
 include(${CMAKE_ROOT}/Modules/ExternalProject.cmake)
 
-set(CXX_WARNINGS "-Wall -Wextra -Wpedantic")
+set(CXX_WARNINGS "-Wall -Wextra -Wno-unused-parameter")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O0 -g ${CXX_WARNINGS} -std=c++11")
 #set(CMAKE_VERBOSE_MAKEFILE ON)
 set(CMAKE_INCLUDE_CURRENT_DIR ON)

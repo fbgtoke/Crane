@@ -31,6 +31,11 @@ public:
   static Mat4 rotationZ(float a);
 
   static Mat4 scale(const Vec3& v);
+
+  static Mat4 ortho(
+    float l, float r, float b, float t,
+    float znear, float zfar
+  );
 };
 
 } }

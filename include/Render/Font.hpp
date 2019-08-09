@@ -42,7 +42,7 @@ private:
     unsigned int height;
     int bearingX;
     int bearingY;
-    int advance;
+    long int advance;
   };
 
   std::map<char, Character> m_Characters;
