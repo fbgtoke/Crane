@@ -71,14 +71,16 @@ const float& Vec3::operator[](std::size_t idx) const
   return values[idx];
 }
 
-float Vec3::length(const Vec3& v)
+float Vec3::length() const
 {
-  return std::sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+  return std::sqrt(x*x + y*y + z*z);
 }
 
-Vec3 Vec3::normalize(const Vec3& v)
+void Vec3::normalize()
 {
-  return 1.f/length(v) * v;
+  x *= 1.f/length();
+  y *= 1.f/length();
+  z *= 1.f/length();
 }
 
 } }

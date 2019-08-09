@@ -1,6 +1,7 @@
 target_sources(crane PUBLIC
   Mat4.cpp
   MatrixTransform.cpp
+  Quat.cpp
   Vec3.cpp
   Vec4.cpp
 )

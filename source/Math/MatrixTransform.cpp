@@ -66,6 +66,35 @@ Mat4 MatrixTransform::rotationZ(float a)
   return m;
 }
 
+Mat4 MatrixTransform::rotation(const Quat& q)
+{
+  Mat4 m;
+  m[0][0] = 1.f - 2.f * (q.j*q.j + q.k*q.k);
+  m[1][0] = 2.f * (q.i*q.j - q.k*q.w);
+  m[2][0] = 2.f * (q.i*q.k + q.j*q.w);
+  m[3][0] = 0;
+
+  m[0][1] = 2.f * (q.i*q.j + q.k*q.w);
+  m[1][1] = 1.f - 2.f * (q.i*q.i + q.k*q.k);
+  m[2][1] = 2.f * (q.j*q.k - q.i*q.w);
+  m[3][1] = 0;
+
+  m[0][2] = 2.f * (q.i*q.k - q.j*q.w);
+  m[1][2] = 2.f * (q.j*q.k + q.i*q.w);
+  m[2][2] = 1.f - 2.f * (q.i*q.i + q.j*q.j);
+  m[3][2] = 0;
+
+  m[0][3] = 0;
+  m[1][3] = 0;
+  m[2][3] = 0;
+  m[3][3] = 1;
+  /*m[0][0] = q.w; m[1][0] = -q.i; m[2][0] = -q.j; m[3][0] = -q.k;
+  m[0][1] = q.i; m[1][1] =  q.w; m[2][1] = -q.k; m[3][1] =  q.j;
+  m[0][2] = q.j; m[1][2] =  q.k; m[2][2] =  q.w; m[3][2] = -q.i;
+  m[0][3] = q.k; m[1][3] = -q.j; m[2][3] =  q.i; m[3][3] =  q.w;*/
+  return m;
+}
+
 Mat4 MatrixTransform::scale(const Vec3& v)
 {
   Mat4 m(1.f);

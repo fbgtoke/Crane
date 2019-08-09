@@ -16,6 +16,8 @@
 
 #pragma once
 
+#include "Math/Vec3.hpp"
+
 namespace Crane {
 
 class Material {
@@ -33,9 +35,9 @@ public:
   inline void disableDiffuse() { m_UseKd = false; }
   inline void disableSpecular() { m_UseKs = false; }
 
-  inline const glm::vec3& getAmbient() const { return m_Ka; }
-  inline const glm::vec3& getDiffuse() const { return m_Kd; }
-  inline const glm::vec3& getSpecular() const { return m_Ks; }
+  inline const Math::Vec3& getAmbient() const { return m_Ka; }
+  inline const Math::Vec3& getDiffuse() const { return m_Kd; }
+  inline const Math::Vec3& getSpecular() const { return m_Ks; }
   inline float getSpecularExponent() const { return m_Ns; }
 
 private:
@@ -45,9 +47,9 @@ private:
   bool m_UseKd;
   bool m_UseKs;
 
-  glm::vec3 m_Ka;
-  glm::vec3 m_Kd;
-  glm::vec3 m_Ks;
+  Math::Vec3 m_Ka;
+  Math::Vec3 m_Kd;
+  Math::Vec3 m_Ks;
   float m_Ns;
 };
 

@@ -17,6 +17,7 @@
 #pragma once
 
 #include "Mat4.hpp"
+#include "Quat.hpp"
 #include "Vec3.hpp"
 
 namespace Crane { namespace Math {
@@ -29,6 +30,8 @@ public:
   static Mat4 rotationX(float a);
   static Mat4 rotationY(float a);
   static Mat4 rotationZ(float a);
+
+  static Mat4 rotation(const Quat& q);
 
   static Mat4 scale(const Vec3& v);
 

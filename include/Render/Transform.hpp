@@ -17,6 +17,7 @@
 #pragma once
 
 #include "Math/Mat4.hpp"
+#include "Math/Quat.hpp"
 #include "Math/Vec3.hpp"
 
 namespace Crane {
@@ -37,7 +38,7 @@ public:
   void recomputeMatrix();
 
   inline const Math::Vec3& getPosition() const { return m_Position; }
-  inline const Math::Vec3& getRotation() const { return m_Rotation; }
+  inline const Math::Quat& getRotation() const { return m_Rotation; }
   inline const Math::Vec3& getScale() const { return m_Scale; }
 
   Math::Vec3 getRotationAngles() const;
@@ -49,7 +50,7 @@ public:
 
 private:
   Math::Vec3 m_Position;
-  Math::Vec3 m_Rotation;
+  Math::Quat m_Rotation;
   Math::Vec3 m_Scale;
 
   Math::Mat4 m_TransformMatrix;

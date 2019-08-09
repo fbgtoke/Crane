@@ -28,10 +28,11 @@
 #include "Core/Time.hpp"
 
 /* Math                                                                       */
-#include "Math/Vec3.hpp"
-#include "Math/Vec4.hpp"
 #include "Math/Mat4.hpp"
 #include "Math/MatrixTransform.hpp"
+#include "Math/Quat.hpp"
+#include "Math/Vec3.hpp"
+#include "Math/Vec4.hpp"
 
 /* Render                                                                     */
 #include "Render/BufferLayout.hpp"

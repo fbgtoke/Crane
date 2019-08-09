@@ -21,7 +21,7 @@
 namespace Crane {
 
 Transform::Transform()
-  : m_Position(0.f), m_Rotation(0.f), m_Scale(1.f), m_TransformMatrix(1.f) {}
+  : m_Position(0.f), m_Rotation(), m_Scale(1.f), m_TransformMatrix(1.f) {}
 
 void Transform::setPosition(const Math::Vec3& position)
 {
@@ -34,19 +34,17 @@ void Transform::move(const Math::Vec3& v)
 
 void Transform::setRotation(const Math::Vec3& rotation)
 {
-  /*glm::quat qx = glm::angleAxis(rotation.x, Vec3(1.f, 0.f, 0.f));
-  glm::quat qy = glm::angleAxis(rotation.y, Vec3(0.f, 1.f, 0.f));
-  glm::quat qz = glm::angleAxis(rotation.z, Vec3(0.f, 0.f, 1.f));
-  m_Rotation = qx * qy * qz;*/
-  m_Rotation = rotation;
+  Math::Quat qx = Math::Quat::fromAxisAngle(rotation.x, Math::Vec3(1.f, 0.f, 0.f));
+  Math::Quat qy = Math::Quat::fromAxisAngle(rotation.y, Math::Vec3(0.f, 1.f, 0.f));
+  Math::Quat qz = Math::Quat::fromAxisAngle(rotation.z, Math::Vec3(0.f, 0.f, 1.f));
+  m_Rotation = qx * qy * qz;
 }
 void Transform::rotate(const Math::Vec3& a)
 {
-  /*glm::quat qx = glm::angleAxis(a.x, Vec3(1.f, 0.f, 0.f));
-  glm::quat qy = glm::angleAxis(a.y, Vec3(0.f, 1.f, 0.f));
-  glm::quat qz = glm::angleAxis(a.z, Vec3(0.f, 0.f, 1.f));
-  m_Rotation = qx * qy * qz * m_Rotation;*/
-  m_Rotation += a;
+  Math::Quat qx = Math::Quat::fromAxisAngle(a.x, Math::Vec3(1.f, 0.f, 0.f));
+  Math::Quat qy = Math::Quat::fromAxisAngle(a.y, Math::Vec3(0.f, 1.f, 0.f));
+  Math::Quat qz = Math::Quat::fromAxisAngle(a.z, Math::Vec3(0.f, 0.f, 1.f));
+  m_Rotation = qx * qy * qz * m_Rotation;
 }
 
 void Transform::setScale(const Math::Vec3& scale)
@@ -62,16 +60,13 @@ void Transform::recomputeMatrix()
 {
   m_TransformMatrix =
     Math::MatrixTransform::translation(m_Position) *
-    Math::MatrixTransform::rotationY(m_Rotation.y) *
-    Math::MatrixTransform::rotationZ(m_Rotation.z) *
-    Math::MatrixTransform::rotationX(m_Rotation.z) *
+    Math::MatrixTransform::rotation(m_Rotation) *
     Math::MatrixTransform::scale(m_Scale);
 }
 
 Math::Vec3 Transform::getRotationAngles() const
 {
-  //return glm::eulerAngles(m_Rotation);
-  return m_Rotation;
+  return Math::Quat::toEuler(m_Rotation);
 }
 
 }

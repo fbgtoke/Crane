@@ -16,38 +16,36 @@
 
 #pragma once
 
-#include <cmath>
+#include "Vec3.hpp"
 
 namespace Crane { namespace Math {
 
-class Vec3 {
+class Quat {
 public:
-  Vec3() : x(0.f), y(0.f), z(0.f) {}
-  Vec3(float v) : x(v), y(v), z(v) {}
-  Vec3(float v1, float v2, float v3) : x(v1), y(v2), z(v3) {}
-  Vec3(const Vec3& v) : x(v.x), y(v.y), z(v.z) {}
+  Quat()
+    : i(0.f), j(0.f), k(0.f), w(1.f) {}
+  Quat(float v1, float v2, float v3, float v4)
+    : i(v1), j(v2), k(v3), w(v4) {}
 
-  friend Vec3 operator+(Vec3 v1, const Vec3& v2);
-  friend Vec3 operator-(Vec3 v1, const Vec3& v2);
-  friend Vec3 operator*(float k, const Vec3& v);
+  friend Quat operator*(const Quat& q1, const Quat& q2);
 
-  Vec3& operator=(const Vec3& v);
-  Vec3& operator+=(const Vec3& v);
-  Vec3& operator-=(const Vec3& v);
+  static Quat fromEuler(float roll, float pitch, float yaw);
+  inline static Quat fromEuler(const Vec3& v)
+  {
+    return fromEuler(v.x, v.y, v.z);
+  }
+  static Quat fromAxisAngle(float a, const Vec3& v);
 
-  friend bool operator==(const Vec3& v1, const Vec3& v2);
+  static Vec3 toEuler(const Quat& q);
 
-  float& operator[](std::size_t idx);
-  const float& operator[](std::size_t idx) const;
 
   float length() const;
   void normalize();
 
   union
   {
-    float values[3];
-    struct { float r, g, b; };
-    struct { float x, y, z; };
+    float values[4];
+    struct { float i, j, k, w; };
   };
 };
 

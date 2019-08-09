@@ -40,8 +40,8 @@ public:
   float& operator[](std::size_t idx);
   const float& operator[](std::size_t idx) const;
 
-  static float length(const Vec4& v);
-  static Vec4 normalize(const Vec4& v);
+  float length() const;
+  void normalize();
 
   union
   {

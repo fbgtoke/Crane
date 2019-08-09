@@ -74,14 +74,17 @@ const float& Vec4::operator[](std::size_t idx) const
   return values[idx];
 }
 
-float Vec4::length(const Vec4& v)
+float Vec4::length() const
 {
-  return std::sqrt(v.x*v.x + v.y*v.y + v.z*v.z + v.w*v.w);
+  return std::sqrt(x*x + y*y + z*z + w*w);
 }
 
-Vec4 Vec4::normalize(const Vec4& v)
+void Vec4::normalize()
 {
-  return 1.f/length(v) * v;
+  x *= 1.f/length();
+  y *= 1.f/length();
+  z *= 1.f/length();
+  w *= 1.f/length();
 }
 
 } }
