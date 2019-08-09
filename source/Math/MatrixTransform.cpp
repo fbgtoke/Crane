@@ -88,10 +88,6 @@ Mat4 MatrixTransform::rotation(const Quat& q)
   m[1][3] = 0;
   m[2][3] = 0;
   m[3][3] = 1;
-  /*m[0][0] = q.w; m[1][0] = -q.i; m[2][0] = -q.j; m[3][0] = -q.k;
-  m[0][1] = q.i; m[1][1] =  q.w; m[2][1] = -q.k; m[3][1] =  q.j;
-  m[0][2] = q.j; m[1][2] =  q.k; m[2][2] =  q.w; m[3][2] = -q.i;
-  m[0][3] = q.k; m[1][3] = -q.j; m[2][3] =  q.i; m[3][3] =  q.w;*/
   return m;
 }
 
@@ -119,6 +115,18 @@ Mat4 MatrixTransform::ortho(
   m[3][2] = - (zfar + znear) / (zfar - znear);
   m[3][3] =  1.f;
 
+  return m;
+}
+
+Mat4 MatrixTransform::perspective(float fov, float ar, float znear, float zfar)
+{
+  Mat4 m;
+  m[0][0] = 1.f / (ar * tan(0.5f * fov));
+  m[1][1] = 1.f / tan(0.5f * fov);
+  m[2][2] = (-znear - zfar) / (znear - zfar);
+
+  m[3][2] = 2.f * zfar * znear / (znear - zfar);
+  m[2][3] = 1.f;
   return m;
 }
 

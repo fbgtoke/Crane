@@ -78,6 +78,11 @@ bool ObjReader::read(
     {
       readFace(sstream, unique_vertices, indices);
     }
+    /* Comment */
+    else if (start == "#")
+    {
+      continue;
+    }
     /* Unrecognized */
     else
     {

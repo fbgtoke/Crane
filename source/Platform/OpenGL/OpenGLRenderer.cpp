@@ -24,6 +24,7 @@ namespace Crane {
 void Renderer::clear()
 {
   CRANE_GL_CALL(glClearColor(1.f, 0.f, 1.f, 1.f));
+  CRANE_GL_CALL(glEnable(GL_DEPTH_TEST));
   CRANE_GL_CALL(glEnable(GL_BLEND));
   CRANE_GL_CALL(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
 

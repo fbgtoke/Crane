@@ -40,6 +40,7 @@
 #include "Render/Font.hpp"
 #include "Render/IndexBuffer.hpp"
 #include "Render/OrthographicCamera.hpp"
+#include "Render/PerspectiveCamera.hpp"
 #include "Render/Renderer.hpp"
 #include "Render/Shader.hpp"
 #include "Render/ShaderProgram.hpp"

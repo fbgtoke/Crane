@@ -14,32 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#pragma once
+#include "PerspectiveCamera.hpp"
 
-#include "Mat4.hpp"
-#include "Quat.hpp"
-#include "Vec3.hpp"
+#include "Math/MatrixTransform.hpp"
 
-namespace Crane { namespace Math {
+namespace Crane {
 
-class MatrixTransform {
-public:
-  static Mat4 translation(const Vec3& v);
-  static Mat4 translate(const Mat4 m, const Vec3& v);
+PerspectiveCamera::PerspectiveCamera(
+  float fov, float ar, float znear, float zfar
+) : m_ProjectionMatrix(Math::MatrixTransform::perspective(fov, ar, znear, zfar))
+{
+  recomputeMatrices();
+}
 
-  static Mat4 rotationX(float a);
-  static Mat4 rotationY(float a);
-  static Mat4 rotationZ(float a);
+void PerspectiveCamera::recomputeMatrices()
+{
+  m_Transform.recomputeMatrix();
+  m_ViewProjectionMatrix =
+    m_ProjectionMatrix * m_Transform.getTransformMatrix();
+}
 
-  static Mat4 rotation(const Quat& q);
-
-  static Mat4 scale(const Vec3& v);
-
-  static Mat4 ortho(
-    float l, float r, float b, float t,
-    float znear, float zfar
-  );
-  static Mat4 perspective(float fov, float ar, float znear, float zfar);
-};
-
-} }
+}
