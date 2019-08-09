@@ -16,7 +16,7 @@
 
 #include "OrthographicCamera.hpp"
 
-#include "Core/MatrixTransform.hpp"
+#include "Math/MatrixTransform.hpp"
 
 namespace Crane {
 
@@ -30,12 +30,12 @@ OrthographicCamera::OrthographicCamera(
   recomputeMatrices();
 }
 
-void OrthographicCamera::setPosition(const Vec3& position)
+void OrthographicCamera::setPosition(const Math::Vec3& position)
 {
   m_Position = position;
 }
 
-void OrthographicCamera::move(const Vec3& v)
+void OrthographicCamera::move(const Math::Vec3& v)
 {
   m_Position += v;
 }
@@ -53,8 +53,8 @@ void OrthographicCamera::rotate(float v)
 void OrthographicCamera::recomputeMatrices()
 {
   m_ViewMatrix =
-    MatrixTransform::translation(-1.1 * m_Position) *
-    MatrixTransform::rotationZ(m_Rotation);
+    Math::MatrixTransform::translation(-1.1 * m_Position) *
+    Math::MatrixTransform::rotationZ(m_Rotation);
 
   m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 }

@@ -27,10 +27,11 @@
 #include "Core/LayerStack.hpp"
 #include "Core/Time.hpp"
 
-#include "Core/Vec3.hpp"
-#include "Core/Vec4.hpp"
-#include "Core/Mat4.hpp"
-#include "Core/MatrixTransform.hpp"
+/* Math                                                                       */
+#include "Math/Vec3.hpp"
+#include "Math/Vec4.hpp"
+#include "Math/Mat4.hpp"
+#include "Math/MatrixTransform.hpp"
 
 /* Render                                                                     */
 #include "Render/BufferLayout.hpp"

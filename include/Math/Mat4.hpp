@@ -18,25 +18,25 @@
 
 #include "Vec4.hpp"
 
-namespace Crane {
+namespace Crane { namespace Math {
 
-class Matrix4 {
+class Mat4 {
 public:
-  Matrix4();
-  Matrix4(float v);
-  Matrix4(const Matrix4& v);
+  Mat4();
+  Mat4(float v);
+  Mat4(const Mat4& v);
 
-  friend Matrix4 operator+(Matrix4 v1, const Matrix4& v2);
-  friend Matrix4 operator-(Matrix4 v1, const Matrix4& v2);
-  friend Matrix4 operator*(float k, const Matrix4& v);
-  friend Matrix4 operator*(const Matrix4& v1, const Matrix4& v2);
-  friend Vec4 operator*(const Matrix4& m, const Vec4& v);
+  friend Mat4 operator+(Mat4 v1, const Mat4& v2);
+  friend Mat4 operator-(Mat4 v1, const Mat4& v2);
+  friend Mat4 operator*(float k, const Mat4& v);
+  friend Mat4 operator*(const Mat4& v1, const Mat4& v2);
+  friend Vec4 operator*(const Mat4& m, const Vec4& v);
 
-  Matrix4& operator=(const Matrix4& v);
-  Matrix4& operator+=(const Matrix4& v);
-  Matrix4& operator-=(const Matrix4& v);
+  Mat4& operator=(const Mat4& v);
+  Mat4& operator+=(const Mat4& v);
+  Mat4& operator-=(const Mat4& v);
 
-  friend bool operator==(const Matrix4& v1, const Matrix4& v2);
+  friend bool operator==(const Mat4& v1, const Mat4& v2);
 
   float* operator[](std::size_t idx);
   const float* operator[](std::size_t idx) const;
@@ -44,4 +44,4 @@ public:
   float values[4][4];
 };
 
-}
+} }

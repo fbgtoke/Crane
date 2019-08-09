@@ -16,17 +16,21 @@
 
 #pragma once
 
-#include "Math/Mat4.hpp"
+#include "Mat4.hpp"
+#include "Vec3.hpp"
 
-namespace Crane {
- 
-class Camera {
+namespace Crane { namespace Math {
+
+class MatrixTransform {
 public:
-  virtual ~Camera() = default;
-  
-  virtual const Math::Mat4& getViewMatrix() const = 0;
-  virtual const Math::Mat4& getProjectionMatrix() const = 0;
-  virtual const Math::Mat4& getViewProjectionMatrix() const = 0;
+  static Mat4 translation(const Vec3& v);
+  static Mat4 translate(const Mat4 m, const Vec3& v);
+
+  static Mat4 rotationX(float a);
+  static Mat4 rotationY(float a);
+  static Mat4 rotationZ(float a);
+
+  static Mat4 scale(const Vec3& v);
 };
 
-}
+} }

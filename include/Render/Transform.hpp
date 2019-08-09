@@ -16,8 +16,8 @@
 
 #pragma once
 
-#include "Core/Mat4.hpp"
-#include "Core/Vec3.hpp"
+#include "Math/Mat4.hpp"
+#include "Math/Vec3.hpp"
 
 namespace Crane {
 
@@ -25,34 +25,34 @@ class Transform {
 public:
   Transform();
 
-  void setPosition(const Vec3& position);
-  void move(const Vec3& v);
+  void setPosition(const Math::Vec3& position);
+  void move(const Math::Vec3& v);
 
-  void setRotation(const Vec3& rotation);
-  void rotate(const Vec3& a);
+  void setRotation(const Math::Vec3& rotation);
+  void rotate(const Math::Vec3& a);
 
-  void setScale(const Vec3& scale);
-  void scale(const Vec3& s);
+  void setScale(const Math::Vec3& scale);
+  void scale(const Math::Vec3& s);
 
   void recomputeMatrix();
 
-  inline const Vec3& getPosition() const { return m_Position; }
-  inline const Vec3& getRotation() const { return m_Rotation; }
-  inline const Vec3& getScale() const { return m_Scale; }
+  inline const Math::Vec3& getPosition() const { return m_Position; }
+  inline const Math::Vec3& getRotation() const { return m_Rotation; }
+  inline const Math::Vec3& getScale() const { return m_Scale; }
 
-  Vec3 getRotationAngles() const;
+  Math::Vec3 getRotationAngles() const;
 
-  inline const Matrix4& getTransformMatrix() const
+  inline const Math::Mat4& getTransformMatrix() const
   {
     return m_TransformMatrix;
   }
 
 private:
-  Vec3 m_Position;
-  Vec3 m_Rotation;
-  Vec3 m_Scale;
+  Math::Vec3 m_Position;
+  Math::Vec3 m_Rotation;
+  Math::Vec3 m_Scale;
 
-  Matrix4 m_TransformMatrix;
+  Math::Mat4 m_TransformMatrix;
 };
 
 }

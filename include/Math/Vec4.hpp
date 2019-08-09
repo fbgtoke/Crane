@@ -18,37 +18,37 @@
 
 #include <cmath>
 
-namespace Crane {
+namespace Crane { namespace Math {
 
-class Vec3 {
+class Vec4 {
 public:
-  Vec3() : x(0.f), y(0.f), z(0.f) {}
-  Vec3(float v) : x(v), y(v), z(v) {}
-  Vec3(float v1, float v2, float v3) : x(v1), y(v2), z(v3) {}
-  Vec3(const Vec3& v) : x(v.x), y(v.y), z(v.z) {}
+  Vec4() : x(0.f), y(0.f), z(0.f), w(0.f) {}
+  Vec4(float v) : x(v), y(v), z(v), w(v) {}
+  Vec4(float v1, float v2, float v3, float v4) : x(v1), y(v2), z(v3), w(v4) {}
+  Vec4(const Vec4& v) : x(v.x), y(v.y), z(v.z), w(v.w) {}
 
-  friend Vec3 operator+(Vec3 v1, const Vec3& v2);
-  friend Vec3 operator-(Vec3 v1, const Vec3& v2);
-  friend Vec3 operator*(float k, const Vec3& v);
+  friend Vec4 operator+(Vec4 v1, const Vec4& v2);
+  friend Vec4 operator-(Vec4 v1, const Vec4& v2);
+  friend Vec4 operator*(float k, const Vec4& v);
 
-  Vec3& operator=(const Vec3& v);
-  Vec3& operator+=(const Vec3& v);
-  Vec3& operator-=(const Vec3& v);
+  Vec4& operator=(const Vec4& v);
+  Vec4& operator+=(const Vec4& v);
+  Vec4& operator-=(const Vec4& v);
 
-  friend bool operator==(const Vec3& v1, const Vec3& v2);
+  friend bool operator==(const Vec4& v1, const Vec4& v2);
 
   float& operator[](std::size_t idx);
   const float& operator[](std::size_t idx) const;
 
-  static float length(const Vec3& v);
-  static Vec3 normalize(const Vec3& v);
+  static float length(const Vec4& v);
+  static Vec4 normalize(const Vec4& v);
 
   union
   {
-    float values[3];
-    struct { float r, g, b; };
-    struct { float x, y, z; };
+    float values[4];
+    struct { float r, g, b, a; };
+    struct { float x, y, z, w; };
   };
 };
 
-}
+} }

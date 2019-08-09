@@ -14,71 +14,74 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "Vec3.hpp"
+#include "Vec4.hpp"
 
-namespace Crane {
+namespace Crane { namespace Math {
 
-Vec3 operator+(Vec3 v1, const Vec3& v2)
+Vec4 operator+(Vec4 v1, const Vec4& v2)
 {
-  return Vec3(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z);
+  return Vec4(v1.x + v2.x, v1.y + v2.y, v1.z + v2.z, v1.w + v2.w);
 }
 
-Vec3 operator-(Vec3 v1, const Vec3& v2)
+Vec4 operator-(Vec4 v1, const Vec4& v2)
 {
-  return Vec3(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z);
+  return Vec4(v1.x - v2.x, v1.y - v2.y, v1.z - v2.z, v1.w - v2.w);
 }
 
-Vec3 operator*(float k, const Vec3& v)
+Vec4 operator*(float k, const Vec4& v)
 {
-  return Vec3(v.x*k, v.y*k, v.z*k);
+  return Vec4(v.x*k, v.y*k, v.z*k, v.w*k);
 }
 
-Vec3& Vec3::operator=(const Vec3& v)
+Vec4& Vec4::operator=(const Vec4& v)
 {
   x = v.x;
   y = v.y;
   z = v.z;
+  w = v.w;
   return *this;
 }
 
-Vec3& Vec3::operator+=(const Vec3& v)
+Vec4& Vec4::operator+=(const Vec4& v)
 {
   x += v.x;
   y += v.y;
   z += v.z;
+  w += v.w;
   return *this;
 }
 
-Vec3& Vec3::operator-=(const Vec3& v)
+Vec4& Vec4::operator-=(const Vec4& v)
 {
   x -= v.x;
   y -= v.y;
   z -= v.z;
+  w -= v.w;
   return *this;
 }
 
-bool operator==(const Vec3& v1, const Vec3& v2)
+bool operator==(const Vec4& v1, const Vec4& v2)
 {
-  return (v1.x == v2.x) && (v1.y == v2.y) && (v1.z == v2.z);
+  return (v1.x == v2.x) && (v1.y == v2.y) && (v1.z == v2.z) && (v1.w == v2.w);
 }
 
-float& Vec3::operator[](std::size_t idx)
+float& Vec4::operator[](std::size_t idx)
 {
   return values[idx];
 }
-const float& Vec3::operator[](std::size_t idx) const
+const float& Vec4::operator[](std::size_t idx) const
 {
   return values[idx];
 }
 
-float Vec3::length(const Vec3& v)
+float Vec4::length(const Vec4& v)
 {
-  return std::sqrt(v.x*v.x + v.y*v.y + v.z*v.z);
+  return std::sqrt(v.x*v.x + v.y*v.y + v.z*v.z + v.w*v.w);
 }
 
-Vec3 Vec3::normalize(const Vec3& v)
+Vec4 Vec4::normalize(const Vec4& v)
 {
   return 1.f/length(v) * v;
 }
 
-}
+} }

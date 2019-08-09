@@ -20,14 +20,14 @@
 
 #include <cstring>
 
-namespace Crane {
+namespace Crane { namespace Math {
 
-Matrix4::Matrix4()
+Mat4::Mat4()
 {
   memset(values, 0, 16 * sizeof(float));
 }
 
-Matrix4::Matrix4(float v)
+Mat4::Mat4(float v)
 {
   memset(values, 0, 16 * sizeof(float));
   values[0][0] = v;
@@ -36,14 +36,14 @@ Matrix4::Matrix4(float v)
   values[3][3] = v;
 }
 
-Matrix4::Matrix4(const Matrix4& v)
+Mat4::Mat4(const Mat4& v)
 {
   memcpy(values, v.values, 16 * sizeof(float));
 }
 
-Matrix4 operator+(Matrix4 v1, const Matrix4& v2)
+Mat4 operator+(Mat4 v1, const Mat4& v2)
 {
-  Matrix4 m;
+  Mat4 m;
   m[0][0] = v1[0][0] + v2[0][0];
   m[1][0] = v1[1][0] + v2[1][0];
   m[2][0] = v1[2][0] + v2[2][0];
@@ -63,9 +63,9 @@ Matrix4 operator+(Matrix4 v1, const Matrix4& v2)
   return m;
 }
 
-Matrix4 operator-(Matrix4 v1, const Matrix4& v2)
+Mat4 operator-(Mat4 v1, const Mat4& v2)
 {
-  Matrix4 m;
+  Mat4 m;
   m[0][0] = v1[0][0] - v2[0][0];
   m[1][0] = v1[1][0] - v2[1][0];
   m[2][0] = v1[2][0] - v2[2][0];
@@ -85,9 +85,9 @@ Matrix4 operator-(Matrix4 v1, const Matrix4& v2)
   return m;
 }
 
-Matrix4 operator*(float k, const Matrix4& v)
+Mat4 operator*(float k, const Mat4& v)
 {
-  Matrix4 m;
+  Mat4 m;
   m[0][0] = v[0][0] * k;
   m[1][0] = v[1][0] * k;
   m[2][0] = v[2][0] * k;
@@ -107,9 +107,9 @@ Matrix4 operator*(float k, const Matrix4& v)
   return m;
 }
 
-Matrix4 operator*(const Matrix4& v1, const Matrix4& v2)
+Mat4 operator*(const Mat4& v1, const Mat4& v2)
 {
-  Matrix4 m;
+  Mat4 m;
   m[0][0] = v1[0][0] * v2[0][0] +
             v1[1][0] * v2[0][1] +
             v1[2][0] * v2[0][2] +
@@ -192,7 +192,7 @@ Matrix4 operator*(const Matrix4& v1, const Matrix4& v2)
   return m;
 }
 
-Vec4 operator*(const Matrix4& m, const Vec4& v)
+Vec4 operator*(const Mat4& m, const Vec4& v)
 {
   Vec4 res;
   res[0] = m[0][0] * v[0] +
@@ -218,12 +218,12 @@ Vec4 operator*(const Matrix4& m, const Vec4& v)
   return res;
 }
 
-Matrix4& Matrix4::operator=(const Matrix4& v)
+Mat4& Mat4::operator=(const Mat4& v)
 {
   memcpy(values, v.values, 16 * sizeof(float));
 }
 
-Matrix4& Matrix4::operator+=(const Matrix4& v)
+Mat4& Mat4::operator+=(const Mat4& v)
 {
   values[0][0] += v[0][0];
   values[1][0] += v[1][0];
@@ -244,7 +244,7 @@ Matrix4& Matrix4::operator+=(const Matrix4& v)
   return *this;
 }
 
-Matrix4& Matrix4::operator-=(const Matrix4& v)
+Mat4& Mat4::operator-=(const Mat4& v)
 {
   values[0][0] -= v[0][0];
   values[1][0] -= v[1][0];
@@ -265,7 +265,7 @@ Matrix4& Matrix4::operator-=(const Matrix4& v)
   return *this;
 }
 
-bool operator==(const Matrix4& v1, const Matrix4& v2)
+bool operator==(const Mat4& v1, const Mat4& v2)
 {
   return
     (v1[0][0] == v2[0][0]) &&
@@ -286,13 +286,13 @@ bool operator==(const Matrix4& v1, const Matrix4& v2)
     (v1[3][3] == v2[3][3]);
 }
 
-float* Matrix4::operator[](std::size_t idx)
+float* Mat4::operator[](std::size_t idx)
 {
   return values[idx];
 }
-const float* Matrix4::operator[](std::size_t idx) const
+const float* Mat4::operator[](std::size_t idx) const
 {
   return values[idx];
 }
 
-}
+} }

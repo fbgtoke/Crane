@@ -18,7 +18,7 @@
 
 #include "Camera.hpp"
 
-#include "Core/Vec3.hpp"
+#include "Math/Vec3.hpp"
 
 namespace Crane {
  
@@ -31,41 +31,41 @@ public:
 
   ~OrthographicCamera() override = default;
 
-  const Matrix4& getViewMatrix() const override
+  const Math::Mat4& getViewMatrix() const override
   {
     return  m_ViewMatrix;
   }
 
-  const Matrix4& getProjectionMatrix() const override
+  const Math::Mat4& getProjectionMatrix() const override
   {
     return  m_ProjectionMatrix;
   }
 
-  const Matrix4& getViewProjectionMatrix() const override
+  const Math::Mat4& getViewProjectionMatrix() const override
   {
     return  m_ViewProjectionMatrix;
   }
 
-  void setPosition(const Vec3& position);
-  void move(const Vec3& v);
+  void setPosition(const Math::Vec3& position);
+  void move(const Math::Vec3& v);
 
   void setRotation(float rotation);
   void rotate(float v);
 
   void recomputeMatrices();
 
-  inline Vec3 getPosition() const { return m_Position; }
+  inline Math::Vec3 getPosition() const { return m_Position; }
   inline float getRotation() const { return m_Rotation; }
 
 private:
   /* View */
-  Vec3 m_Position;
+  Math::Vec3 m_Position;
   float m_Rotation;
 
   /* Matrices */
-  Matrix4 m_ViewMatrix;
-  Matrix4 m_ProjectionMatrix;
-  Matrix4 m_ViewProjectionMatrix;
+  Math::Mat4 m_ViewMatrix;
+  Math::Mat4 m_ProjectionMatrix;
+  Math::Mat4 m_ViewProjectionMatrix;
 };
 
 }
