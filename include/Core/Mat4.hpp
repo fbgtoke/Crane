@@ -16,43 +16,32 @@
 
 #pragma once
 
-#include "Core/Mat4.hpp"
-#include "Core/Vec3.hpp"
+#include "Vec4.hpp"
 
 namespace Crane {
 
-class Transform {
+class Matrix4 {
 public:
-  Transform();
+  Matrix4();
+  Matrix4(float v);
+  Matrix4(const Matrix4& v);
 
-  void setPosition(const Vec3& position);
-  void move(const Vec3& v);
+  friend Matrix4 operator+(Matrix4 v1, const Matrix4& v2);
+  friend Matrix4 operator-(Matrix4 v1, const Matrix4& v2);
+  friend Matrix4 operator*(float k, const Matrix4& v);
+  friend Matrix4 operator*(const Matrix4& v1, const Matrix4& v2);
+  friend Vec4 operator*(const Matrix4& m, const Vec4& v);
 
-  void setRotation(const Vec3& rotation);
-  void rotate(const Vec3& a);
+  Matrix4& operator=(const Matrix4& v);
+  Matrix4& operator+=(const Matrix4& v);
+  Matrix4& operator-=(const Matrix4& v);
 
-  void setScale(const Vec3& scale);
-  void scale(const Vec3& s);
+  friend bool operator==(const Matrix4& v1, const Matrix4& v2);
 
-  void recomputeMatrix();
+  float* operator[](std::size_t idx);
+  const float* operator[](std::size_t idx) const;
 
-  inline const Vec3& getPosition() const { return m_Position; }
-  inline const Vec3& getRotation() const { return m_Rotation; }
-  inline const Vec3& getScale() const { return m_Scale; }
-
-  Vec3 getRotationAngles() const;
-
-  inline const Matrix4& getTransformMatrix() const
-  {
-    return m_TransformMatrix;
-  }
-
-private:
-  Vec3 m_Position;
-  Vec3 m_Rotation;
-  Vec3 m_Scale;
-
-  Matrix4 m_TransformMatrix;
+  float values[4][4];
 };
 
 }

@@ -27,6 +27,11 @@
 #include "Core/LayerStack.hpp"
 #include "Core/Time.hpp"
 
+#include "Core/Vec3.hpp"
+#include "Core/Vec4.hpp"
+#include "Core/Mat4.hpp"
+#include "Core/MatrixTransform.hpp"
+
 /* Render                                                                     */
 #include "Render/BufferLayout.hpp"
 #include "Render/Camera.hpp"

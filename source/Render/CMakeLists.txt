@@ -10,7 +10,6 @@ target_include_directories(crane PRIVATE
   $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include/Render>
   $<INSTALL_INTERFACE:include>
   ${GLAD_INCLUDE_DIRS}
-  ${GLM_INCLUDE_DIRS}
   ${FREETYPE_INCLUDE_DIRS}
 )
 

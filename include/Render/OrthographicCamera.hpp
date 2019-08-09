@@ -18,7 +18,7 @@
 
 #include "Camera.hpp"
 
-#include <glm/vec3.hpp>
+#include "Core/Vec3.hpp"
 
 namespace Crane {
  
@@ -31,41 +31,41 @@ public:
 
   ~OrthographicCamera() override = default;
 
-  const glm::mat4& getViewMatrix() const override
+  const Matrix4& getViewMatrix() const override
   {
     return  m_ViewMatrix;
   }
 
-  const glm::mat4& getProjectionMatrix() const override
+  const Matrix4& getProjectionMatrix() const override
   {
     return  m_ProjectionMatrix;
   }
 
-  const glm::mat4& getViewProjectionMatrix() const override
+  const Matrix4& getViewProjectionMatrix() const override
   {
     return  m_ViewProjectionMatrix;
   }
 
-  void setPosition(const glm::vec3& position);
-  void move(const glm::vec3& v);
+  void setPosition(const Vec3& position);
+  void move(const Vec3& v);
 
   void setRotation(float rotation);
   void rotate(float v);
 
   void recomputeMatrices();
 
-  inline glm::vec3 getPosition() const { return m_Position; }
+  inline Vec3 getPosition() const { return m_Position; }
   inline float getRotation() const { return m_Rotation; }
 
 private:
   /* View */
-  glm::vec3 m_Position;
+  Vec3 m_Position;
   float m_Rotation;
 
   /* Matrices */
-  glm::mat4 m_ViewMatrix;
-  glm::mat4 m_ProjectionMatrix;
-  glm::mat4 m_ViewProjectionMatrix;
+  Matrix4 m_ViewMatrix;
+  Matrix4 m_ProjectionMatrix;
+  Matrix4 m_ViewProjectionMatrix;
 };
 
 }

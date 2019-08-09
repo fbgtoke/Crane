@@ -19,11 +19,9 @@ set(GLAD_ROOT_DIR "/home/fabio/Documents/Crane/ThirdParty/glad/build/install")
 
 ## Required packages (needs refactoring) ##
 find_package(OpenGL REQUIRED)
-find_package(GLM REQUIRED)
 find_package(Glad REQUIRED)
 find_package(GLFW REQUIRED)
 find_package(Freetype REQUIRED)
-#add_subdirectory(ThirdParty/freetype-2.10.1)
 
 ## Build switches ##
 if (CRANE_PLATFORM_LINUX)

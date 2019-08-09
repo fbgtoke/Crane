@@ -18,9 +18,12 @@
 #include "Log.hpp"
 #include "Logo.hpp"
 
+#include "Vec3.hpp"
+#include "Vec4.hpp"
+#include "Mat4.hpp"
+
 int main(int argc, char* argv[]) {
   CRANE_LOG_INFO(Crane::CraneLogo);
-
   Crane::Application::get()->run();
 
   return 0;
