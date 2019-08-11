@@ -20,7 +20,7 @@ namespace Crane {
 
 WindowProperties::WindowProperties
 (
-  const std::string& t, unsigned int w, unsigned int h
+  const std::string& t, uint32_t w, uint32_t h
 ) : title(t), width(w), height(h) {}
 
 }

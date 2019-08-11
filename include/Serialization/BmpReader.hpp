@@ -26,7 +26,7 @@ class BmpReader {
 public:
   static bool read(
     const std::string& filename, std::size_t& width, std::size_t& height,
-    std::vector<unsigned char>& data
+    std::vector<uint8_t>& data
   );
 };
 

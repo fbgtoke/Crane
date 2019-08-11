@@ -93,9 +93,9 @@ void OpenGLShaderProgram::use() const
   CRANE_GL_CALL(glUseProgram(m_Id));
 }
 
-unsigned int OpenGLShaderProgram::getUniformLocation(const std::string& name) const
+uint32_t OpenGLShaderProgram::getUniformLocation(const std::string& name) const
 {
-  unsigned int location =
+  uint32_t location =
     CRANE_GL_CALL(glGetUniformLocation(m_Id, name.c_str()));
     
   return location;
@@ -171,7 +171,7 @@ void OpenGLShaderProgram::setUniformTexture(const std::string& name,
   CRANE_GL_CALL(glUniform1i(uniform.location, tex->getTextureUnit()));
 }
 
-ShaderDatatype toCrane(unsigned int type)
+ShaderDatatype toCrane(uint32_t type)
 {
   switch (type)
   {
@@ -202,13 +202,13 @@ void OpenGLShaderProgram::queryUniforms()
   const int max_length = 16;
   int length;
   int size;
-  unsigned int type;
+  uint32_t type;
   char name[max_length];
 
   for (int i = 0; i < count; i++)
   {
     CRANE_GL_CALL(glGetActiveUniform(
-      m_Id, (unsigned int)i,
+      m_Id, (uint32_t)i,
       max_length, &length, &size, &type, name
     ));
 

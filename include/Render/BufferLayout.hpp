@@ -37,7 +37,7 @@ struct BufferLayoutElement {
     const std::string& name, ShaderDatatype type, bool norm = false
   );
 
-  unsigned int getCount() const
+  uint32_t getCount() const
   {
     switch (type)
     {
@@ -86,13 +86,13 @@ public:
     return m_LayoutElements.end();
   }
 
-  inline unsigned int getStride() const { return m_Stride; }
+  inline uint32_t getStride() const { return m_Stride; }
 
-  static unsigned int toNativeDatatype(ShaderDatatype t);
+  static uint32_t toNativeDatatype(ShaderDatatype t);
 
 private:
   std::vector<BufferLayoutElement> m_LayoutElements;
-  unsigned int m_Stride;
+  uint32_t m_Stride;
 
   void computeOffsets();
 };

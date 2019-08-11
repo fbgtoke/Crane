@@ -23,7 +23,7 @@ namespace Crane {
 
 bool BmpReader::read(
   const std::string& filename, std::size_t& width, std::size_t& height,
-  std::vector<unsigned char>& data
+  std::vector<uint8_t>& data
 )
 {
   /****************************************************************************/
@@ -48,10 +48,10 @@ bool BmpReader::read(
     return false;
   }
 
-  unsigned int offset;
-  offset = *reinterpret_cast<unsigned int*>(&header[10]);
-  width = *reinterpret_cast<unsigned int*>(&header[18]);
-  height = *reinterpret_cast<unsigned int*>(&header[22]);
+  uint32_t offset;
+  offset = *reinterpret_cast<uint32_t*>(&header[10]);
+  width = *reinterpret_cast<uint32_t*>(&header[18]);
+  height = *reinterpret_cast<uint32_t*>(&header[22]);
 
   fstream.seekg(offset);
 
@@ -74,7 +74,7 @@ bool BmpReader::read(
   /* Convert BGR to RGB                                                       */
   /****************************************************************************/
   char tmp;
-  for (unsigned int i = 0; i < data_size; i += 3)
+  for (uint32_t i = 0; i < data_size; i += 3)
   {
     tmp = data[i];
     data[i] = data[i+2];

@@ -16,9 +16,11 @@
 
 #pragma once
 
+#include <cstdint>
+
 namespace Crane { namespace Keyboard {
 
-typedef enum : unsigned int {
+typedef enum : uint32_t {
   Space,       
   Apostrophe,   /* ' */
   Comma,        /*  */

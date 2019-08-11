@@ -27,7 +27,7 @@ class ObjReader {
 public:
   static bool read(
     const std::string& filename,
-    std::vector<float>& data, std::vector<unsigned int>& indices
+    std::vector<float>& data, std::vector<uint32_t>& indices
   );
 
 private:
@@ -35,7 +35,7 @@ private:
   struct Texcoord { float u, v; };
   struct Normal { float x, y, z; };
   struct Vertex {
-    unsigned int p, t, n;
+    uint32_t p, t, n;
 
     bool operator==(const Vertex& v) const
     {
@@ -57,7 +57,7 @@ private:
 
   static void readFace(
     std::stringstream& stream, std::vector<Vertex>& unique_vertices,
-    std::vector<unsigned int>& indices
+    std::vector<uint32_t>& indices
   );
 
   static void readVertex(

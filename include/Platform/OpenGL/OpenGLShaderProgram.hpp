@@ -18,8 +18,9 @@
 
 #include "Render/ShaderProgram.hpp"
 
-#include <string>
+#include <cstdint>
 #include <unordered_map>
+#include <string>
 
 namespace Crane {
   
@@ -37,7 +38,7 @@ public:
 
   void use() const override;
 
-  unsigned int getUniformLocation(const std::string& name) const;
+  uint32_t getUniformLocation(const std::string& name) const;
 
   void setUniform1i(const std::string& name, int v) const override;
   void setUniform1f(const std::string& name, float v) const override;
@@ -47,18 +48,18 @@ public:
   void setUniformMat4f(const std::string& name, const float* v) const override;
   void setUniformTexture(const std::string& name, const Texture * const tex) const override;
 
-  inline unsigned int getId() const { return m_Id; }
+  inline uint32_t getId() const { return m_Id; }
 
 private:
-  unsigned int m_Id;
+  uint32_t m_Id;
 
   void queryUniforms();
 
   struct Uniform {
-    unsigned int location;
+    uint32_t location;
     ShaderDatatype type;
     Uniform() {};
-    Uniform(unsigned int l, ShaderDatatype t)
+    Uniform(uint32_t l, ShaderDatatype t)
       : location(l), type(t) {};
   };
   std::unordered_map<std::string, Uniform> m_Uniforms;

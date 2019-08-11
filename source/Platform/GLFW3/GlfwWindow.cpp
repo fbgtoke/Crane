@@ -46,7 +46,7 @@ void GlfwWindow::update()
   glfwPollEvents();
 }
 
-unsigned int GlfwWindow::getWidth() const
+uint32_t GlfwWindow::getWidth() const
 {
   GlfwWindowProperties* properties =
     (GlfwWindowProperties*)glfwGetWindowUserPointer(m_Window);
@@ -54,7 +54,7 @@ unsigned int GlfwWindow::getWidth() const
   return properties->width;
 }
 
-unsigned int GlfwWindow::getHeight() const
+uint32_t GlfwWindow::getHeight() const
 {
   GlfwWindowProperties* properties =
     (GlfwWindowProperties*)glfwGetWindowUserPointer(m_Window);

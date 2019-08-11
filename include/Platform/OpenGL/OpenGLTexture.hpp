@@ -16,26 +16,54 @@
 
 #pragma once
 
-#include "Render/VertexBuffer.hpp"
+#include "Render/Texture.hpp"
 
 #include <cstdint>
 
 namespace Crane {
-
-class OpenGLVertexBuffer : public VertexBuffer {
+  
+class OpenGLTexture : public Texture {
 public:
-  OpenGLVertexBuffer(std::size_t size, void* data);
-  ~OpenGLVertexBuffer();
+  OpenGLTexture(std::size_t width, std::size_t height, uint8_t* data);
+  ~OpenGLTexture();
 
   void destroy() override;
 
   void bind() const override;
   void unbind() const override;
 
-  inline uint32_t getId() const { return m_Id; }
+  void setTextureUnit(uint32_t unit) override;
+
+  void setFormat(int format);
+  void setType(int type);
+
+  void setWrapS(int wrap);
+  void setWrapT(int wrap);
+
+  void setMinFilter(int filter);
+  void setMagFilter(int filter);
+
+  inline uint32_t getId() const override { return m_Id; }
+  inline std::size_t getWidth() const override { return m_Width; }
+  inline std::size_t getHeight() const override { return m_Height; }
+
+  uint32_t getTextureUnit() const override;
 
 private:
   uint32_t m_Id;
+
+  std::size_t m_Width;
+  std::size_t m_Height;
+  uint32_t m_TextureUnit;
+
+  int m_Format;
+  int m_Type;
+
+  int m_WrapS;
+  int m_WrapT;
+
+  int m_MinFilter;
+  int m_MagFilter;
 };
 
 }

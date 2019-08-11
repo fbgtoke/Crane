@@ -18,11 +18,13 @@
 
 #include "Render/IndexBuffer.hpp"
 
+#include <cstdint>
+
 namespace Crane {
 
 class OpenGLIndexBuffer : public IndexBuffer {
 public:
-  OpenGLIndexBuffer(std::size_t size, unsigned int* data);
+  OpenGLIndexBuffer(std::size_t size, uint32_t* data);
   virtual ~OpenGLIndexBuffer() override;
 
   void destroy() override;
@@ -30,10 +32,10 @@ public:
   void bind() const override;
   void unbind() const override;
 
-  inline unsigned int getId() const { return m_Id; }
+  inline uint32_t getId() const { return m_Id; }
 
 private:
-  unsigned int m_Id;
+  uint32_t m_Id;
 };
 
 }

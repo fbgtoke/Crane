@@ -55,7 +55,7 @@ void OpenGLVertexArray::addVertexBuffer(const VertexBuffer* buffer)
   CRANE_GL_CALL(glBindVertexArray(m_Id));
   buffer->bind();
 
-  unsigned int index = 0;
+  uint32_t index = 0;
   const BufferLayout& layout = buffer->getLayout();
   for (const auto& e : layout)
   {

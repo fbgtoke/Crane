@@ -14,32 +14,20 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "Texture.hpp"
-#include "Platform/OpenGL/OpenGLLog.hpp"
+#include "OpenGLTexture.hpp"
+#include "OpenGLLog.hpp"
 
 #include <glad/glad.h>
 
 namespace Crane {
 
-Texture::Texture()
-  : m_Id(GL_INVALID_VALUE), m_Width(0), m_Height(0), m_TextureUnit(0),
+OpenGLTexture::OpenGLTexture(
+  std::size_t width, std::size_t height, uint8_t* data
+) : m_Id(GL_INVALID_VALUE), m_Width(width), m_Height(height), m_TextureUnit(0),
   m_Format(GL_RGB), m_Type(GL_UNSIGNED_BYTE),
   m_WrapS(GL_REPEAT), m_WrapT(GL_REPEAT),
-  m_MinFilter(GL_LINEAR), m_MagFilter(GL_LINEAR) {}
-
-Texture::~Texture()
+  m_MinFilter(GL_LINEAR), m_MagFilter(GL_LINEAR)
 {
-  if (m_Id != GL_INVALID_VALUE)
-  {
-    destroy();
-  }
-}
-
-void Texture::create(std::size_t width, std::size_t height, unsigned char* data)
-{
-  m_Width = width;
-  m_Height = height;
-
   CRANE_GL_CALL(glGenTextures(1, &m_Id));
   CRANE_GL_CALL(glActiveTexture(GL_TEXTURE0 + m_TextureUnit));
   CRANE_GL_CALL(glBindTexture(GL_TEXTURE_2D, m_Id));
@@ -67,58 +55,76 @@ void Texture::create(std::size_t width, std::size_t height, unsigned char* data)
   ));
 }
 
-void Texture::destroy()
+OpenGLTexture::~OpenGLTexture()
+{
+  if (m_Id != GL_INVALID_VALUE)
+  {
+    destroy();
+  }
+}
+
+void OpenGLTexture::destroy()
 {
   CRANE_GL_CALL(glDeleteTextures(1, &m_Id));
   m_Id = GL_INVALID_VALUE;
 }
 
-void Texture::bind() const
+void OpenGLTexture::bind() const
 {
   CRANE_GL_CALL(glActiveTexture(GL_TEXTURE0 + m_TextureUnit));
   CRANE_GL_CALL(glBindTexture(GL_TEXTURE_2D, m_Id));
 }
 
-void Texture::unbind() const
+void OpenGLTexture::unbind() const
 {
   CRANE_GL_CALL(glBindTexture(GL_TEXTURE_2D, 0));
 }
 
-void Texture::setTextureUnit(unsigned int unit)
+void OpenGLTexture::setTextureUnit(uint32_t unit)
 {
   m_TextureUnit = unit;
 }
 
-void Texture::setFormat(int format)
+void OpenGLTexture::setFormat(int format)
 {
   m_Format = format;
 }
-void Texture::setType(int type)
+void OpenGLTexture::setType(int type)
 {
   m_Type = type;
 }
 
-void Texture::setWrapS(int wrap)
+void OpenGLTexture::setWrapS(int wrap)
 {
   m_WrapS = wrap;
 }
-void Texture::setWrapT(int wrap)
+void OpenGLTexture::setWrapT(int wrap)
 {
   m_WrapT = wrap;
 }
 
-void Texture::setMinFilter(int filter)
+void OpenGLTexture::setMinFilter(int filter)
 {
   m_MinFilter = filter;
 }
-void Texture::setMagFilter(int filter)
+void OpenGLTexture::setMagFilter(int filter)
 {
   m_MagFilter = filter;
 }
 
-unsigned int Texture::getTextureUnit() const
+uint32_t OpenGLTexture::getTextureUnit() const
 {
   return m_TextureUnit;
+}
+
+/******************************************************************************/
+/* Implementation of static methods from Texture class                        */
+/******************************************************************************/
+Texture* Texture::create(
+  std::size_t width, std::size_t height, uint8_t* data
+)
+{
+  return new OpenGLTexture(width, height, data);
 }
 
 }

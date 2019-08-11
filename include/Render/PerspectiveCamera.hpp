@@ -58,6 +58,7 @@ private:
   Transform m_Transform;
 
   /* Matrices */
+  Math::Mat4 m_ViewMatrix;
   Math::Mat4 m_ProjectionMatrix;
   Math::Mat4 m_ViewProjectionMatrix;
 };

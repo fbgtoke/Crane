@@ -49,16 +49,16 @@ void Renderer::render(
 
 void Renderer::renderIndexed(
   const VertexArray * const vao, const ShaderProgram * const program,
-  const Texture& texture
+  const Texture * const texture
 )
 {
   program->use();
 
   vao->bind();
 
-  texture.bind();
+  texture->bind();
   /* To do: replace hardcoded "tex" */
-  program->setUniformTexture("tex", &texture);
+  program->setUniformTexture("tex", texture);
 
   CRANE_GL_CALL(glDrawElements(
     GL_TRIANGLES,

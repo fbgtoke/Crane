@@ -38,9 +38,11 @@ public:
 
   static Vec3 toEuler(const Quat& q);
 
-
   float length() const;
   void normalize();
+
+  Quat conjugate() const;
+  Quat inverse() const;
 
   union
   {

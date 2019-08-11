@@ -51,16 +51,15 @@ bool Font::loadFromFile(const std::string& filename)
       continue;
     }
 
-    Texture* texture = new Texture();
-    texture->setFormat(GL_RED);
-    texture->setType(GL_UNSIGNED_BYTE);
-    texture->setWrapS(GL_CLAMP_TO_EDGE);
-    texture->setWrapT(GL_CLAMP_TO_EDGE);
-    texture->create(
+    Texture* texture = Texture::create(
       face->glyph->bitmap.width,
       face->glyph->bitmap.rows,
       face->glyph->bitmap.buffer
     );
+    //texture->setFormat(GL_RED);
+    //texture->setType(GL_UNSIGNED_BYTE);
+    //texture->setWrapS(GL_CLAMP_TO_EDGE);
+    //texture->setWrapT(GL_CLAMP_TO_EDGE);
 
     Character character = {
       texture,

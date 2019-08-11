@@ -82,4 +82,16 @@ void Quat::normalize()
   k *= 1.f/length();
 }
 
+Quat Quat::conjugate() const
+{
+  return Quat(-i, -j, -k, w);
+}
+Quat Quat::inverse() const
+{
+  Quat c = conjugate();
+  float v = w*w + i*i + j*j + k*k;
+
+  return Quat(c.i/v, c.j/v, c.k/v, c.w/v);
+}
+
 } }

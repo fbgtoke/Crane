@@ -20,7 +20,7 @@
 
 namespace Crane {
 
-unsigned int BufferLayout::toNativeDatatype(ShaderDatatype t)
+uint32_t BufferLayout::toNativeDatatype(ShaderDatatype t)
 {
   switch (t)
   {

@@ -38,8 +38,8 @@ public:
 private:
   struct Character {
     Texture* texture;
-    unsigned int width;
-    unsigned int height;
+    uint32_t width;
+    uint32_t height;
     int bearingX;
     int bearingY;
     long int advance;

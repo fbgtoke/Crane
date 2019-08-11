@@ -23,7 +23,7 @@ namespace Crane {
 
 bool ObjReader::read(
   const std::string& filename,
-  std::vector<float>& data, std::vector<unsigned int>& indices
+  std::vector<float>& data, std::vector<uint32_t>& indices
 )
 {
   /****************************************************************************/
@@ -163,7 +163,7 @@ void ObjReader::readNormal(
 
 void ObjReader::readFace(
   std::stringstream& stream, std::vector<Vertex>& unique_vertices,
-  std::vector<unsigned int>& indices
+  std::vector<uint32_t>& indices
 )
 {
   for (int i = 0; i < 3; ++i)
@@ -179,7 +179,7 @@ void ObjReader::readFace(
     }
     else
     {
-      indices.push_back((unsigned int)index);
+      indices.push_back((uint32_t)index);
     }
   }
 }
@@ -217,7 +217,7 @@ int ObjReader::findVertex(
   const std::vector<Vertex>& vertices, const Vertex& vertex
 )
 {
-  for (unsigned int i = 0; i < vertices.size(); ++i)
+  for (uint32_t i = 0; i < vertices.size(); ++i)
   {
     if (vertices[i] == vertex)
     {

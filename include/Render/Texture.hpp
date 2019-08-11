@@ -17,52 +17,25 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
 
 namespace Crane {
   
 class Texture {
 public:
-  Texture();
-  ~Texture();
+  static Texture* create(std::size_t width, std::size_t height, uint8_t* data);
+  virtual void destroy() = 0;
 
-  void create(std::size_t width, std::size_t height, unsigned char* data);
-  void destroy();
+  virtual void bind() const = 0;
+  virtual void unbind() const = 0;
 
-  void bind() const;
-  void unbind() const;
+  virtual void setTextureUnit(uint32_t unit) = 0;
 
-  void setTextureUnit(unsigned int unit);
+  virtual uint32_t getId() const = 0;
+  virtual std::size_t getWidth() const = 0;
+  virtual std::size_t getHeight() const = 0;
 
-  void setFormat(int format);
-  void setType(int type);
-
-  void setWrapS(int wrap);
-  void setWrapT(int wrap);
-
-  void setMinFilter(int filter);
-  void setMagFilter(int filter);
-
-  inline unsigned int getId() const { return m_Id; }
-  inline std::size_t getWidth() const { return m_Width; }
-  inline std::size_t getHeight() const { return m_Height; }
-
-  unsigned int getTextureUnit() const;
-
-private:
-  unsigned int m_Id;
-
-  std::size_t m_Width;
-  std::size_t m_Height;
-  unsigned int m_TextureUnit;
-
-  int m_Format;
-  int m_Type;
-
-  int m_WrapS;
-  int m_WrapT;
-
-  int m_MinFilter;
-  int m_MagFilter;
+  virtual uint32_t getTextureUnit() const = 0;
 };
 
 }

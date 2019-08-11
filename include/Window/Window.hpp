@@ -28,10 +28,10 @@ namespace Crane {
 
 struct WindowProperties {
   std::string title;
-  unsigned int width;
-  unsigned int height;
+  uint32_t width;
+  uint32_t height;
 
-  WindowProperties(const std::string& t, unsigned int w, unsigned int h);
+  WindowProperties(const std::string& t, uint32_t w, uint32_t h);
 };
 
 class Window {
@@ -40,8 +40,8 @@ public:
 
   virtual void update() = 0;
 
-  virtual unsigned int getWidth() const = 0;
-  virtual unsigned int getHeight() const = 0;
+  virtual uint32_t getWidth() const = 0;
+  virtual uint32_t getHeight() const = 0;
   virtual void setEventCallback(std::function<void(Event* e)> callback) = 0;
 
   static Window* create(const WindowProperties& properties);

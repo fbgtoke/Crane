@@ -18,6 +18,8 @@
 
 #include "Render/Shader.hpp"
 
+#include <cstdint>
+
 namespace Crane {
 
 class OpenGLShader : public Shader {
@@ -27,7 +29,7 @@ public:
   void destroy() override;
 
   inline ShaderType getType() const { return m_Type; }
-  inline unsigned int getId() const { return m_Id; }
+  inline uint32_t getId() const { return m_Id; }
   inline bool isCompiled() const { return m_Compiled; }
 
 private:

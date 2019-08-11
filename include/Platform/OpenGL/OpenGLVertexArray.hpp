@@ -18,6 +18,8 @@
 
 #include "Render/VertexArray.hpp"
 
+#include <cstdint>
+
 namespace Crane {
 
 class OpenGLVertexArray : public VertexArray {
@@ -33,10 +35,10 @@ public:
   void addVertexBuffer(const VertexBuffer* buffer) override;
   void setIndexBuffer(const IndexBuffer* buffer) override;
 
-  inline unsigned int getId() const { return m_Id; }
+  inline uint32_t getId() const { return m_Id; }
 
 private:
-  unsigned int m_Id;
+  uint32_t m_Id;
 };
 
 }

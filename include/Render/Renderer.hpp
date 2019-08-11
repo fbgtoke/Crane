@@ -32,7 +32,7 @@ public:
 
   static void renderIndexed(
     const VertexArray * const vao, const ShaderProgram * const program,
-    const Texture& texture
+    const Texture * const texture
   );
 };
 

@@ -21,7 +21,7 @@
 
 namespace Crane {
 
-OpenGLIndexBuffer::OpenGLIndexBuffer(std::size_t size, unsigned int* data)
+OpenGLIndexBuffer::OpenGLIndexBuffer(std::size_t size, uint32_t* data)
 {
   CRANE_GL_CALL(glGenBuffers(1, &m_Id));
   CRANE_GL_CALL(glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_Id));
@@ -30,7 +30,7 @@ OpenGLIndexBuffer::OpenGLIndexBuffer(std::size_t size, unsigned int* data)
     glBufferData(GL_ELEMENT_ARRAY_BUFFER, size, data, GL_STATIC_DRAW)
   );
 
-  m_Count = size / sizeof(unsigned int);
+  m_Count = size / sizeof(uint32_t);
 }
 
 OpenGLIndexBuffer::~OpenGLIndexBuffer()
@@ -60,7 +60,7 @@ void OpenGLIndexBuffer::unbind() const
 /******************************************************************************/
 /* Implementation of static methods from IndexBuffer class                    */
 /******************************************************************************/
-IndexBuffer* IndexBuffer::create(std::size_t size, unsigned int* data)
+IndexBuffer* IndexBuffer::create(std::size_t size, uint32_t* data)
 {
   return new OpenGLIndexBuffer(size, data);
 }

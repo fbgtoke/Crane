@@ -31,8 +31,8 @@ public:
 
   void update() override;
 
-  unsigned int getWidth() const override;
-  unsigned int getHeight() const override;
+  uint32_t getWidth() const override;
+  uint32_t getHeight() const override;
   void setEventCallback(std::function<void(Event* e)> callback) override;
 
   static bool initGlfw();
@@ -45,8 +45,8 @@ private:
 
   struct GlfwWindowProperties {
     std::string title;
-    unsigned int width;
-    unsigned int height;
+    uint32_t width;
+    uint32_t height;
 
     std::function<void(Event* e)> callback;
     // more...

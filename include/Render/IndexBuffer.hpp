@@ -17,6 +17,7 @@
 #pragma once
 
 #include <cstddef>
+#include <cstdint>
 
 namespace Crane {
 
@@ -26,7 +27,7 @@ public:
     : m_Count(0) {}
   virtual ~IndexBuffer() = default;
 
-  static IndexBuffer* create(std::size_t size, unsigned int* data);
+  static IndexBuffer* create(std::size_t size, uint32_t* data);
   virtual void destroy() = 0;
 
   virtual void bind() const = 0;

@@ -29,9 +29,12 @@ PerspectiveCamera::PerspectiveCamera(
 
 void PerspectiveCamera::recomputeMatrices()
 {
-  m_Transform.recomputeMatrix();
-  m_ViewProjectionMatrix =
-    m_ProjectionMatrix * m_Transform.getTransformMatrix();
+  m_ViewMatrix =
+    Math::MatrixTransform::translation(-1.f * m_Transform.getPosition()) *
+    Math::MatrixTransform::rotation(m_Transform.getRotation().inverse()) *
+    Math::MatrixTransform::scale(m_Transform.getScale());
+
+  m_ViewProjectionMatrix = m_ProjectionMatrix * m_ViewMatrix;
 }
 
 }
