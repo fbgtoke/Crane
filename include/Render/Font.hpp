@@ -18,34 +18,14 @@
 
 #include "Texture.hpp"
 
-#include <ft2build.h>
-#include FT_FREETYPE_H
-
-#include <map>
 #include <string>
 
 namespace Crane {
 
 class Font {
 public:
-  bool loadFromFile(const std::string& filename);
-
-  inline Texture* getCharacterTexture(char c) const
-  {
-    return m_Characters.at(c).texture;
-  }
-
-private:
-  struct Character {
-    Texture* texture;
-    uint32_t width;
-    uint32_t height;
-    int bearingX;
-    int bearingY;
-    long int advance;
-  };
-
-  std::map<char, Character> m_Characters;
+  static Font* create(const std::string& filename);
+  virtual Texture* getTextureAtlas() const = 0;
 };
 
 }

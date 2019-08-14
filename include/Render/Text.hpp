@@ -16,35 +16,25 @@
 
 #pragma once
 
-#include <cstddef>
-#include <cstdint>
+#include "Font.hpp"
+
+#include <string>
 
 namespace Crane {
-  
-class Texture {
-public:
-  typedef enum : uint8_t { R, RG, RGB, RGBA, BGR, BGRA } format_t;
 
-  static Texture* create(
-    std::size_t width, std::size_t height, uint8_t* data,
-    format_t ch = Texture::RGB
-  );
+class Text {
+public:
+  Text() = default;
+  virtual ~Text() = default;
+
+  static Text* create(const Font* font = nullptr, const std::string& str = "");
   virtual void destroy() = 0;
 
-  virtual void bind() const = 0;
-  virtual void unbind() const = 0;
+  virtual void setFont(const Font* font) = 0;
+  virtual const Font* getFont() const = 0;
 
-  virtual void setTextureUnit(uint32_t unit) = 0;
-  virtual uint32_t getTextureUnit() const = 0;
-
-  virtual uint32_t getId() const = 0;
-  virtual std::size_t getWidth() const = 0;
-  virtual std::size_t getHeight() const = 0;
-
-  virtual void subImage(
-    int x, int y, std::size_t w, std::size_t h, uint8_t* data
-  ) = 0;
-
+  virtual void setString(const std::string& str) = 0;
+  virtual const std::string& getString() const = 0;
 };
 
 }

@@ -16,35 +16,37 @@
 
 #pragma once
 
-#include <cstddef>
-#include <cstdint>
+#include "OpenGLFont.hpp"
+
+#include "Render/Text.hpp"
+#include "Render/VertexArray.hpp"
+#include "Render/VertexBuffer.hpp"
 
 namespace Crane {
-  
-class Texture {
+
+class OpenGLText : public Text {
 public:
-  typedef enum : uint8_t { R, RG, RGB, RGBA, BGR, BGRA } format_t;
+  OpenGLText(const Font* font, const std::string& str);
+  virtual ~OpenGLText() override;
 
-  static Texture* create(
-    std::size_t width, std::size_t height, uint8_t* data,
-    format_t ch = Texture::RGB
-  );
-  virtual void destroy() = 0;
+  void destroy() override;
 
-  virtual void bind() const = 0;
-  virtual void unbind() const = 0;
+  void setFont(const Font* font) override;
+  inline const Font* getFont() const override { return m_Font; }
 
-  virtual void setTextureUnit(uint32_t unit) = 0;
-  virtual uint32_t getTextureUnit() const = 0;
+  void setString(const std::string& str) override;
+  inline const std::string& getString() const override { return m_String; }
 
-  virtual uint32_t getId() const = 0;
-  virtual std::size_t getWidth() const = 0;
-  virtual std::size_t getHeight() const = 0;
+  const VertexArray* getVertexArray() const { return m_VertexArray; }
 
-  virtual void subImage(
-    int x, int y, std::size_t w, std::size_t h, uint8_t* data
-  ) = 0;
+private:
+  const OpenGLFont* m_Font;
+  std::string m_String;
 
+  VertexArray* m_VertexArray;
+  VertexBuffer* m_VertexBuffer;
+
+  void updateBuffers();
 };
 
 }

@@ -16,6 +16,8 @@
 
 #pragma once
 
+#include "Font.hpp"
+#include "Text.hpp"
 #include "Texture.hpp"
 #include "ShaderProgram.hpp"
 #include "VertexArray.hpp"
@@ -34,6 +36,8 @@ public:
     const VertexArray * const vao, const ShaderProgram * const program,
     const Texture * const texture
   );
+
+  static void render(const ShaderProgram * const program, const Text * text);
 };
 
 }

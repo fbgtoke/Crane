@@ -16,6 +16,7 @@
 
 #include "Render/Renderer.hpp"
 #include "OpenGLLog.hpp"
+#include "OpenGLText.hpp"
 
 #include <glad/glad.h>
 
@@ -65,6 +66,26 @@ void Renderer::renderIndexed(
     vao->getIndexBuffer()->getCount(),
     GL_UNSIGNED_INT,
     nullptr
+  ));
+}
+
+void Renderer::render(const ShaderProgram * const program, const Text * text)
+{
+  program->use();
+
+  const OpenGLText* ogl_text = dynamic_cast<const OpenGLText*>(text);
+  ogl_text->getVertexArray()->bind();
+
+  const Texture* texture = ogl_text->getFont()->getTextureAtlas();
+  texture->bind();
+
+  /* To do: replace hardcoded "tex" */
+  program->setUniformTexture("tex", texture);
+
+  CRANE_GL_CALL(glDrawArrays(
+    GL_TRIANGLES,
+    0,
+    text->getString().size() * 24
   ));
 }
 

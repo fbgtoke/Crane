@@ -17,42 +17,14 @@
 #include "OpenGLTexture.hpp"
 #include "OpenGLLog.hpp"
 
-#include <glad/glad.h>
-
 namespace Crane {
 
 OpenGLTexture::OpenGLTexture(
-  std::size_t width, std::size_t height, uint8_t* data
-) : m_Id(GL_INVALID_VALUE), m_Width(width), m_Height(height), m_TextureUnit(0),
-  m_Format(GL_RGB), m_Type(GL_UNSIGNED_BYTE),
-  m_WrapS(GL_REPEAT), m_WrapT(GL_REPEAT),
-  m_MinFilter(GL_LINEAR), m_MagFilter(GL_LINEAR)
+  std::size_t width, std::size_t height, uint8_t* data, format_t nch
+) : m_Width(width), m_Height(height),
+    m_Format(toOpenGL(nch)), m_Type(GL_UNSIGNED_BYTE)
 {
-  CRANE_GL_CALL(glGenTextures(1, &m_Id));
-  CRANE_GL_CALL(glActiveTexture(GL_TEXTURE0 + m_TextureUnit));
-  CRANE_GL_CALL(glBindTexture(GL_TEXTURE_2D, m_Id));
-  
-  CRANE_GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_WrapS));
-  CRANE_GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_WrapT));
-
-  CRANE_GL_CALL(
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_MinFilter)
-  );
-  CRANE_GL_CALL(
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_MagFilter)
-  );
-
-  CRANE_GL_CALL(glTexImage2D(
-    GL_TEXTURE_2D,
-    0, 
-    m_Format,
-    m_Width,
-    m_Height,
-    0,
-    m_Format,
-    m_Type,
-    data
-  ));
+  setData(m_Format, m_Type, (void*)data);
 }
 
 OpenGLTexture::~OpenGLTexture()
@@ -69,10 +41,40 @@ void OpenGLTexture::destroy()
   m_Id = GL_INVALID_VALUE;
 }
 
+void OpenGLTexture::setData(uint32_t format, uint32_t type, void* data)
+{
+  CRANE_GL_CALL(glGenTextures(1, &m_Id));
+
+  bind();
+
+  CRANE_GL_CALL(glTexImage2D(
+    GL_TEXTURE_2D,
+    0, 
+    format,
+    m_Width,
+    m_Height,
+    0,
+    format,
+    type,
+    data
+  ));
+}
+
 void OpenGLTexture::bind() const
 {
   CRANE_GL_CALL(glActiveTexture(GL_TEXTURE0 + m_TextureUnit));
   CRANE_GL_CALL(glBindTexture(GL_TEXTURE_2D, m_Id));
+
+  CRANE_GL_CALL(
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, m_MinFilter)
+  );
+
+  CRANE_GL_CALL(
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, m_MagFilter)
+  );
+
+  CRANE_GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, m_WrapS));
+  CRANE_GL_CALL(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, m_WrapT));
 }
 
 void OpenGLTexture::unbind() const
@@ -80,51 +82,39 @@ void OpenGLTexture::unbind() const
   CRANE_GL_CALL(glBindTexture(GL_TEXTURE_2D, 0));
 }
 
-void OpenGLTexture::setTextureUnit(uint32_t unit)
+void OpenGLTexture::subImage(
+  int x, int y, std::size_t w, std::size_t h, uint8_t* data
+)
 {
-  m_TextureUnit = unit;
+  CRANE_GL_CALL(
+    glTexSubImage2D(GL_TEXTURE_2D, 0, x, y, w, h, m_Format, m_Type, data)
+  );
 }
 
-void OpenGLTexture::setFormat(int format)
+int OpenGLTexture::toOpenGL(format_t ch)
 {
-  m_Format = format;
-}
-void OpenGLTexture::setType(int type)
-{
-  m_Type = type;
-}
+  switch (ch)
+  {
+    case R:    return GL_RED;
+    case RG :  return GL_RG;
+    case RGB:  return GL_RGB;
+    case RGBA: return GL_RGBA;
+    case BGR:  return GL_BGR;
+    case BGRA: return GL_BGRA;
+  }
 
-void OpenGLTexture::setWrapS(int wrap)
-{
-  m_WrapS = wrap;
-}
-void OpenGLTexture::setWrapT(int wrap)
-{
-  m_WrapT = wrap;
-}
-
-void OpenGLTexture::setMinFilter(int filter)
-{
-  m_MinFilter = filter;
-}
-void OpenGLTexture::setMagFilter(int filter)
-{
-  m_MagFilter = filter;
-}
-
-uint32_t OpenGLTexture::getTextureUnit() const
-{
-  return m_TextureUnit;
+  CRANE_LOG_FATAL("Unknown texture format", ch);
+  return 0;
 }
 
 /******************************************************************************/
 /* Implementation of static methods from Texture class                        */
 /******************************************************************************/
 Texture* Texture::create(
-  std::size_t width, std::size_t height, uint8_t* data
+  std::size_t width, std::size_t height, uint8_t* data, format_t ch
 )
 {
-  return new OpenGLTexture(width, height, data);
+  return new OpenGLTexture(width, height, data, ch);
 }
 
 }

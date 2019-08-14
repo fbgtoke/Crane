@@ -16,35 +16,39 @@
 
 #pragma once
 
-#include <cstddef>
-#include <cstdint>
+#include "Render/Font.hpp"
+#include "Render/Texture.hpp"
+
+#include <map>
 
 namespace Crane {
-  
-class Texture {
+
+class OpenGLFont : public Font {
 public:
-  typedef enum : uint8_t { R, RG, RGB, RGBA, BGR, BGRA } format_t;
+  OpenGLFont(const std::string& filename);
 
-  static Texture* create(
-    std::size_t width, std::size_t height, uint8_t* data,
-    format_t ch = Texture::RGB
-  );
-  virtual void destroy() = 0;
+  inline Texture* getTextureAtlas() const override
+  {
+    return m_Atlas;
+  }
 
-  virtual void bind() const = 0;
-  virtual void unbind() const = 0;
-
-  virtual void setTextureUnit(uint32_t unit) = 0;
-  virtual uint32_t getTextureUnit() const = 0;
-
-  virtual uint32_t getId() const = 0;
-  virtual std::size_t getWidth() const = 0;
-  virtual std::size_t getHeight() const = 0;
-
-  virtual void subImage(
-    int x, int y, std::size_t w, std::size_t h, uint8_t* data
-  ) = 0;
-
+  typedef struct {
+    uint32_t offsetX;
+    uint32_t offsetY;
+    uint32_t width;
+    uint32_t height;
+    int bearingX;
+    int bearingY;
+    long int advance;
+  } Character;
+  inline const Character& getCharacter(char c) const
+  {
+    return m_Characters.at(c);
+  }
+  
+private:
+  Texture* m_Atlas;
+  std::map<char, Character> m_Characters;
 };
 
 }

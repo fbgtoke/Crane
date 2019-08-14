@@ -18,52 +18,61 @@
 
 #include "Render/Texture.hpp"
 
+#include <glad/glad.h>
+
 #include <cstdint>
 
 namespace Crane {
   
 class OpenGLTexture : public Texture {
 public:
-  OpenGLTexture(std::size_t width, std::size_t height, uint8_t* data);
+  OpenGLTexture(
+    std::size_t width, std::size_t height, uint8_t* data,
+    format_t ch
+  );
   ~OpenGLTexture();
 
   void destroy() override;
 
+
   void bind() const override;
   void unbind() const override;
 
-  void setTextureUnit(uint32_t unit) override;
+  inline void setTextureUnit(uint32_t unit) override { m_TextureUnit = unit; }
+  inline uint32_t getTextureUnit() const override { return m_TextureUnit; }
 
-  void setFormat(int format);
-  void setType(int type);
+  inline void setWrapS(int wrap) { m_WrapS = wrap; };
+  inline void setWrapT(int wrap) { m_WrapT = wrap; };
 
-  void setWrapS(int wrap);
-  void setWrapT(int wrap);
-
-  void setMinFilter(int filter);
-  void setMagFilter(int filter);
+  inline void setMinFilter(int filter) { m_MinFilter = filter; };
+  inline void setMagFilter(int filter) { m_MagFilter = filter; };
 
   inline uint32_t getId() const override { return m_Id; }
   inline std::size_t getWidth() const override { return m_Width; }
   inline std::size_t getHeight() const override { return m_Height; }
 
-  uint32_t getTextureUnit() const override;
-
+  void subImage(
+    int x, int y, std::size_t w, std::size_t h, uint8_t* data
+  ) override;
 private:
-  uint32_t m_Id;
+  uint32_t m_Id = GL_INVALID_VALUE;
+  uint32_t m_TextureUnit = 0;
 
   std::size_t m_Width;
   std::size_t m_Height;
-  uint32_t m_TextureUnit;
+
+  static int toOpenGL(format_t ch);
 
   int m_Format;
   int m_Type;
 
-  int m_WrapS;
-  int m_WrapT;
+  int m_WrapS = GL_REPEAT;
+  int m_WrapT = GL_REPEAT;
 
-  int m_MinFilter;
-  int m_MagFilter;
+  int m_MinFilter = GL_LINEAR;
+  int m_MagFilter = GL_LINEAR;
+
+  void setData(uint32_t format, uint32_t type, void* data);
 };
 
 }

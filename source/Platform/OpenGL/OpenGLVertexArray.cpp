@@ -38,6 +38,9 @@ void OpenGLVertexArray::destroy()
 {
   CRANE_GL_CALL(glDeleteVertexArrays(1, &m_Id));
   m_Id = GL_INVALID_VALUE;
+
+  m_VertexBuffers.clear();
+  m_IndexBuffer = nullptr;
 }
 
 void OpenGLVertexArray::bind() const

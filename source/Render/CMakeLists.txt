@@ -1,5 +1,4 @@
 target_sources(crane PUBLIC
-  Font.cpp
   OrthographicCamera.cpp
   PerspectiveCamera.cpp
   Transform.cpp
