@@ -29,20 +29,25 @@
 
 namespace Crane {
 
+void OpenGLFont::getAlphabet(std::vector<char>& alphabet)
+{
+  for (char c = 32; c <= 126; ++c)
+    alphabet.push_back(c);
+}
+
 OpenGLFont::OpenGLFont(const std::string& filename)
   : m_Atlas(nullptr)
 {
   FT_Library ft;
-  if (FT_Init_FreeType(&ft))
-  {
-    CRANE_LOG_FATAL("Could not initialize Freetype library");
-  }
+  CRANE_ASSERT(!FT_Init_FreeType(&ft), "Could not initialize Freetype library");
 
   FT_Face face;
   if (FT_New_Face(ft, filename.c_str(), 0, &face))
   {
-    FT_Done_FreeType(ft);
-    CRANE_LOG_FATAL("Could not load font file {0}", filename);
+    CRANE_ASSERT
+    (
+      FT_Done_FreeType(ft), "Could not load font file: ", filename
+    );
   }
 
   FT_Set_Pixel_Sizes(face, 0, 48);
@@ -52,15 +57,9 @@ OpenGLFont::OpenGLFont(const std::string& filename)
 
   // To do.. All this section needs to be cleaned up
   std::vector<char> alphabet;
-  for (char c = 'A'; c <= 'Z'; ++c) alphabet.push_back(c);
-  for (char c = 'a'; c <= 'z'; ++c) alphabet.push_back(c);
-  for (char c = '0'; c <= '9'; ++c) alphabet.push_back(c);
-  alphabet.push_back('.');
-  alphabet.push_back('(');
-  alphabet.push_back(')');
+  getAlphabet(alphabet);
 
   /* Allocate empty texture */
-  //for (char c = 'A'; c <= 'Z'; ++c)
   for (char c : alphabet)
   {
     if (FT_Load_Char(face, c, FT_LOAD_RENDER))
@@ -72,18 +71,12 @@ OpenGLFont::OpenGLFont(const std::string& filename)
     max_width += face->glyph->bitmap.width;
     max_height = std::max(max_height, face->glyph->bitmap.rows);
   }
-
   m_Atlas = Texture::create(max_width, max_height, nullptr, Texture::R);
-  // TODO: expand Texture API to avoid this cast
-  OpenGLTexture* ogl_texture = dynamic_cast<OpenGLTexture*>(m_Atlas);
-    ogl_texture->setWrapS(GL_CLAMP_TO_EDGE);
-    ogl_texture->setWrapT(GL_CLAMP_TO_EDGE);
 
   /* Populate atlas */
   uint32_t cur_x = 0;
   CRANE_GL_CALL(glPixelStorei(GL_UNPACK_ALIGNMENT, 1));
 
-  //for (char c = 'A'; c <= 'Z'; ++c)
   for (char c : alphabet)
   {
     if (FT_Load_Char(face, c, FT_LOAD_RENDER))

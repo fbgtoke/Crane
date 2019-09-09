@@ -44,6 +44,19 @@ public:
   void error(T t, Args... args)
   {
     print("31", t, args...);
+    flush();
+    exit(EXIT_FAILURE);
+  }
+
+  template <typename T, typename... Args>
+  void assert(bool condition, T t, Args... args)
+  {
+    if (!condition)
+    {
+      print("31", t, args...);
+      flush();
+      exit(EXIT_FAILURE);
+    }
   }
 
   void flush()
@@ -94,9 +107,8 @@ private:
 #define CRANE_LOG_ERROR(...) \
   ::Crane::Log::getLogger()->error(__VA_ARGS__)
 
-#define CRANE_LOG_FATAL(...) \
-  ::Crane::Log::getLogger()->error(__VA_ARGS__); \
-  exit(EXIT_FAILURE)   
+#define CRANE_ASSERT(_check, ...) \
+  ::Crane::Log::getLogger()->assert(_check, __VA_ARGS__)
 
 #else
 
@@ -106,6 +118,7 @@ private:
 
 #define CRANE_LOG_ERROR(...)
 
-#define CRANE_LOG_FATAL(...)
+#define CRANE_ASSERT(_check, ...) \
+  _check
 
 #endif // DEBUG

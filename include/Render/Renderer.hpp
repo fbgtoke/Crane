@@ -19,7 +19,7 @@
 #include "Font.hpp"
 #include "Text.hpp"
 #include "Texture.hpp"
-#include "ShaderProgram.hpp"
+#include "Shader.hpp"
 #include "VertexArray.hpp"
 
 namespace Crane {
@@ -29,15 +29,15 @@ public:
   static void clear();
 
   static void render(
-    const VertexArray * const vao, const ShaderProgram * const program
+    const VertexArray * const vao, const Shader * const program
   );
 
   static void renderIndexed(
-    const VertexArray * const vao, const ShaderProgram * const program,
+    const VertexArray * const vao, const Shader * const program,
     const Texture * const texture
   );
 
-  static void render(const ShaderProgram * const program, const Text * text);
+  static void render(const Shader * const program, const Text * text);
 };
 
 }

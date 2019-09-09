@@ -96,8 +96,8 @@ void OpenGLText::updateBuffers()
 
   m_VertexBuffer = VertexBuffer::create(size, &data[0]);
   m_VertexBuffer->setLayout({
-    { "position", Crane::ShaderDatatype::Float2 },
-    { "uvs", Crane::ShaderDatatype::Float2 }
+    { "position", Crane::Shader::Float2 },
+    { "uvs", Crane::Shader::Float2 }
   });
   m_VertexArray->addVertexBuffer(m_VertexBuffer);
 }

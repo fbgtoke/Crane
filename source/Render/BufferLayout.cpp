@@ -19,7 +19,7 @@
 namespace Crane {
 
 BufferLayoutElement::BufferLayoutElement(
-  const std::string& name, ShaderDatatype type, bool norm
+  const std::string& name, Shader::Datatype type, bool norm
 ) : name(name), type(type), size(Shader::getDatatypeSize(type)), offset(0),
     normalized(norm) {}
 

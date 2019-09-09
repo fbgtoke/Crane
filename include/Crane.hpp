@@ -43,7 +43,6 @@
 #include "Render/PerspectiveCamera.hpp"
 #include "Render/Renderer.hpp"
 #include "Render/Shader.hpp"
-#include "Render/ShaderProgram.hpp"
 #include "Render/Text.hpp"
 #include "Render/Texture.hpp"
 #include "Render/Transform.hpp"

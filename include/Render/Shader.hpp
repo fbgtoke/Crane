@@ -16,29 +16,52 @@
 
 #pragma once
 
+#include "Texture.hpp"
+
 #include <string>
+#include <vector>
 
 namespace Crane {
-
-typedef enum {
-  Int, Int2, Int3, Int4,
-  Float, Float2, Float3, Float4,
-  Mat3, Mat4,
-  Tex
-} ShaderDatatype;
 
 class Shader {
 public:
   typedef enum {
-    Unknown, Vertex, Fragment
-  } ShaderType;
+    Int, Int2, Int3, Int4,
+    Float, Float2, Float3, Float4,
+    Mat3, Mat4,
+    Tex
+  } Datatype;
 
-  Shader() = default;
+  typedef enum {
+    Unknown, Vertex, Fragment
+  } Type;
+
   virtual ~Shader() = default;
+
+  static Shader* create(
+    const std::vector<std::string>& src, const std::vector<Type>& types,
+    const std::string& name = ""
+  );
+  static Shader* create(
+    const std::string& filename, const std::string& name = ""
+  );
+
+  virtual const std::string& getName() const = 0;
+
   virtual void destroy() = 0;
-  
-  static Shader* create(ShaderType t, const std::string& src);
-  static std::size_t getDatatypeSize(ShaderDatatype t);
+  virtual void use() const = 0;
+
+  virtual void setUniform1i(const std::string& name, int v) const = 0;
+  virtual void setUniform1f(const std::string& name, float v) const = 0;
+  virtual void setUniform2f(const std::string& name, float v1, float v2) const = 0;
+  virtual void setUniform3f(const std::string& name, float v1, float v2, float v3) const = 0;
+  virtual void setUniformMat3f(const std::string& name, const float* v) const = 0;
+  virtual void setUniformMat4f(const std::string& name, const float* v) const = 0;
+  virtual void setUniformTexture(const std::string& name, const Texture * const tex) const = 0;
+
+  static std::size_t getDatatypeSize(Datatype t);
+
+  static Type fromString(const std::string& str);
 };
 
 }

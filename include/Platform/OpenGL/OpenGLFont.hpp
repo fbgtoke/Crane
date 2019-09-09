@@ -20,6 +20,7 @@
 #include "Render/Texture.hpp"
 
 #include <map>
+#include <vector>
 
 namespace Crane {
 
@@ -49,6 +50,8 @@ public:
 private:
   Texture* m_Atlas;
   std::map<char, Character> m_Characters;
+
+  static void getAlphabet(std::vector<char>& alphabet);
 };
 
 }

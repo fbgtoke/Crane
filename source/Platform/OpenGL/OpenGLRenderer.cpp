@@ -34,7 +34,7 @@ void Renderer::clear()
 }
 
 void Renderer::render(
-  const VertexArray * const vao, const ShaderProgram * const program
+  const VertexArray * const vao, const Shader * const program
 )
 {
   program->use();
@@ -49,7 +49,7 @@ void Renderer::render(
 }
 
 void Renderer::renderIndexed(
-  const VertexArray * const vao, const ShaderProgram * const program,
+  const VertexArray * const vao, const Shader * const program,
   const Texture * const texture
 )
 {
@@ -69,7 +69,7 @@ void Renderer::renderIndexed(
   ));
 }
 
-void Renderer::render(const ShaderProgram * const program, const Text * text)
+void Renderer::render(const Shader * const program, const Text * text)
 {
   program->use();
 

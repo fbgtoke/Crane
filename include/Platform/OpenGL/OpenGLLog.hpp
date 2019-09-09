@@ -26,7 +26,7 @@
     int _err;                                                     \
     while ((_err = glGetError()))                                 \
     {                                                             \
-      CRANE_LOG_FATAL(                                            \
+      CRANE_LOG_ERROR(                                            \
         "{0}:{1} OpenGL Error: 0x{2:x}", __FILE__, __LINE__, _err \
       );                                                          \
     }                                                             \

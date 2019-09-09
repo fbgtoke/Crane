@@ -84,10 +84,7 @@ void GlfwWindow::init(const WindowProperties& properties)
   /* Init GLFW */
   if (!m_GlfwInitialized)
   {
-    if (!glfwInit())
-    {
-      CRANE_LOG_FATAL("Could not initialize GLFW library");
-    }
+    CRANE_ASSERT(glfwInit(), "Could not initialize GLFW library");
 
     glfwSetErrorCallback(errorCallback);
     m_GlfwInitialized = true;
@@ -105,10 +102,7 @@ void GlfwWindow::init(const WindowProperties& properties)
     nullptr
   );
 
-  if (!m_Window)
-  {
-    CRANE_LOG_FATAL("Could not create window");
-  }
+  CRANE_ASSERT(m_Window, "Could not create window");
 
   glfwMakeContextCurrent(m_Window);
   gladLoadGL();

@@ -103,7 +103,7 @@ int OpenGLTexture::toOpenGL(format_t ch)
     case BGRA: return GL_BGRA;
   }
 
-  CRANE_LOG_FATAL("Unknown texture format", ch);
+  CRANE_LOG_ERROR("Unknown texture format", ch);
   return 0;
 }
 

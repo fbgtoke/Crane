@@ -27,30 +27,30 @@ namespace Crane {
 
 struct BufferLayoutElement {
   std::string name;
-  ShaderDatatype type;
+  Shader::Datatype type;
   std::size_t size;
   std::size_t offset;
   bool normalized;
 
   BufferLayoutElement() {}
   BufferLayoutElement(
-    const std::string& name, ShaderDatatype type, bool norm = false
+    const std::string& name, Shader::Datatype type, bool norm = false
   );
 
   uint32_t getCount() const
   {
     switch (type)
     {
-      case ShaderDatatype::Int:    return 1;
-      case ShaderDatatype::Int2:   return 2;
-      case ShaderDatatype::Int3:   return 3;
-      case ShaderDatatype::Int4:   return 4;
-      case ShaderDatatype::Float:  return 1;
-      case ShaderDatatype::Float2: return 2;
-      case ShaderDatatype::Float3: return 3;
-      case ShaderDatatype::Float4: return 4;
-      case ShaderDatatype::Mat3:   return 3 * 3;
-      case ShaderDatatype::Mat4:   return 4 * 4;
+      case Shader::Int:    return 1;
+      case Shader::Int2:   return 2;
+      case Shader::Int3:   return 3;
+      case Shader::Int4:   return 4;
+      case Shader::Float:  return 1;
+      case Shader::Float2: return 2;
+      case Shader::Float3: return 3;
+      case Shader::Float4: return 4;
+      case Shader::Mat3:   return 3 * 3;
+      case Shader::Mat4:   return 4 * 4;
       default: return 0;
     }
   }
@@ -88,7 +88,7 @@ public:
 
   inline uint32_t getStride() const { return m_Stride; }
 
-  static uint32_t toNativeDatatype(ShaderDatatype t);
+  static uint32_t toNativeDatatype(Shader::Datatype t);
 
 private:
   std::vector<BufferLayoutElement> m_LayoutElements;

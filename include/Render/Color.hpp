@@ -14,28 +14,24 @@
 // You should have received a copy of the GNU General Public License
 // along with this program. If not, see <http://www.gnu.org/licenses/>.
 
-#include "BufferLayout.hpp"
+#pragma once
 
-#include <glad/glad.h>
+#include "Math/Vec4.hpp"
 
 namespace Crane {
 
-uint32_t BufferLayout::toNativeDatatype(Shader::Datatype t)
-{
-  switch (t)
-  {
-    case Shader::Int:    return GL_INT;
-    case Shader::Int2:   return GL_INT;
-    case Shader::Int3:   return GL_INT;
-    case Shader::Int4:   return GL_INT;
-    case Shader::Float:  return GL_FLOAT;
-    case Shader::Float2: return GL_FLOAT;
-    case Shader::Float3: return GL_FLOAT;
-    case Shader::Float4: return GL_FLOAT;
-    case Shader::Mat3:   return GL_FLOAT;
-    case Shader::Mat4:   return GL_FLOAT;
-    default: return GL_INVALID_VALUE;
-  }
-}
+class Color : public Math::Vec4 {
+public:
+  static const Color   Red(1.f, 0.f, 0.f, 1.f);
+  static const Color Green(0.f, 1.f, 0.f, 1.f);
+  static const Color  Blue(0.f, 0.f, 1.f, 1.f);
+
+  static const Color  Yellow(1.f, 1.f, 0.f, 1.f);
+  static const Color    Cyan(0.f, 1.f, 1.f, 1.f);
+  static const Color Magenta(1.f, 0.f, 1.f, 1.f);
+
+  static const Color Black(0.f, 0.f, 0.f, 1.f);
+  static const Color White(1.f, 1.f, 1.f, 1.f);
+};
 
 }
